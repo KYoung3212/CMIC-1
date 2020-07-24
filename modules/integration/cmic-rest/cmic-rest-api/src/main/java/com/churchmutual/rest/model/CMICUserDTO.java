@@ -39,8 +39,8 @@ public class CMICUserDTO extends CMICObjectDTO {
 		_id = id;
 	}
 
-	public void setOrganizationList(List<CMICUserRelationDTO> userRelations) {
-		_organizationList = userRelations;
+	public void setOrganizationList(List<CMICUserRelationDTO> organizationList) {
+		_organizationList = organizationList;
 	}
 
 	public void setRegistrationCode(String registrationCode) {

@@ -184,62 +184,71 @@ public class CMICAccountEntryUtil {
 	}
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or throws a <code>NoSuchCMICAccountEntryException</code> if it could not be found.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or throws a <code>NoSuchCMICAccountEntryException</code> if it could not be found.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the matching cmic account entry
 	 * @throws NoSuchCMICAccountEntryException if a matching cmic account entry could not be found
 	 */
-	public static CMICAccountEntry findByAccountNumber(String accountNumber)
+	public static CMICAccountEntry findByAN_CN(
+			String accountNumber, String companyNumber)
 		throws com.churchmutual.core.exception.NoSuchCMICAccountEntryException {
 
-		return getPersistence().findByAccountNumber(accountNumber);
+		return getPersistence().findByAN_CN(accountNumber, companyNumber);
 	}
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the matching cmic account entry, or <code>null</code> if a matching cmic account entry could not be found
 	 */
-	public static CMICAccountEntry fetchByAccountNumber(String accountNumber) {
-		return getPersistence().fetchByAccountNumber(accountNumber);
+	public static CMICAccountEntry fetchByAN_CN(
+		String accountNumber, String companyNumber) {
+
+		return getPersistence().fetchByAN_CN(accountNumber, companyNumber);
 	}
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cmic account entry, or <code>null</code> if a matching cmic account entry could not be found
 	 */
-	public static CMICAccountEntry fetchByAccountNumber(
-		String accountNumber, boolean useFinderCache) {
+	public static CMICAccountEntry fetchByAN_CN(
+		String accountNumber, String companyNumber, boolean useFinderCache) {
 
-		return getPersistence().fetchByAccountNumber(
-			accountNumber, useFinderCache);
+		return getPersistence().fetchByAN_CN(
+			accountNumber, companyNumber, useFinderCache);
 	}
 
 	/**
-	 * Removes the cmic account entry where accountNumber = &#63; from the database.
+	 * Removes the cmic account entry where accountNumber = &#63; and companyNumber = &#63; from the database.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the cmic account entry that was removed
 	 */
-	public static CMICAccountEntry removeByAccountNumber(String accountNumber)
+	public static CMICAccountEntry removeByAN_CN(
+			String accountNumber, String companyNumber)
 		throws com.churchmutual.core.exception.NoSuchCMICAccountEntryException {
 
-		return getPersistence().removeByAccountNumber(accountNumber);
+		return getPersistence().removeByAN_CN(accountNumber, companyNumber);
 	}
 
 	/**
-	 * Returns the number of cmic account entries where accountNumber = &#63;.
+	 * Returns the number of cmic account entries where accountNumber = &#63; and companyNumber = &#63;.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the number of matching cmic account entries
 	 */
-	public static int countByAccountNumber(String accountNumber) {
-		return getPersistence().countByAccountNumber(accountNumber);
+	public static int countByAN_CN(String accountNumber, String companyNumber) {
+		return getPersistence().countByAN_CN(accountNumber, companyNumber);
 	}
 
 	/**

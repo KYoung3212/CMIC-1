@@ -113,7 +113,9 @@ public class CMICAccountEntryModelImpl
 
 	public static final long ACCOUNTNUMBER_COLUMN_BITMASK = 2L;
 
-	public static final long CMICACCOUNTENTRYID_COLUMN_BITMASK = 4L;
+	public static final long COMPANYNUMBER_COLUMN_BITMASK = 4L;
+
+	public static final long CMICACCOUNTENTRYID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -426,7 +428,17 @@ public class CMICAccountEntryModelImpl
 
 	@Override
 	public void setCompanyNumber(String companyNumber) {
+		_columnBitmask |= COMPANYNUMBER_COLUMN_BITMASK;
+
+		if (_originalCompanyNumber == null) {
+			_originalCompanyNumber = _companyNumber;
+		}
+
 		_companyNumber = companyNumber;
+	}
+
+	public String getOriginalCompanyNumber() {
+		return GetterUtil.getString(_originalCompanyNumber);
 	}
 
 	@JSON
@@ -592,6 +604,9 @@ public class CMICAccountEntryModelImpl
 		cmicAccountEntryModelImpl._originalAccountNumber =
 			cmicAccountEntryModelImpl._accountNumber;
 
+		cmicAccountEntryModelImpl._originalCompanyNumber =
+			cmicAccountEntryModelImpl._companyNumber;
+
 		cmicAccountEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -720,6 +735,7 @@ public class CMICAccountEntryModelImpl
 	private String _accountNumber;
 	private String _originalAccountNumber;
 	private String _companyNumber;
+	private String _originalCompanyNumber;
 	private int _numExpiredPolicies;
 	private int _numFuturePolicies;
 	private int _numInForcePolicies;

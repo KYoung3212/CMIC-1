@@ -60,36 +60,38 @@ const PolicyList = (props) => {
 
           </ClayTable.Row>
         </ClayTable.Head>
-        <ClayTable.Body>
-          {props.policyList.map((policy, index) => (
-            <ClayTable.Row
-              key={index}
-              className="cursor-pointer"
-              onClick={(e) => navigate(e, policy.policyNumber)}>
-              <ClayTable.Cell>
-                <h5 className="font-weight-bold mb-0">{policy.policyName}</h5>
-                <small className="text-muted">#{policy.policyNumber}</small>
-              </ClayTable.Cell>
+        {props.policyList != null &&
+          <ClayTable.Body>
+            {props.policyList.map((policy, index) => (
+              <ClayTable.Row
+                key={index}
+                className="cursor-pointer"
+                onClick={(e) => navigate(e, policy.policyNumber)}>
+                <ClayTable.Cell>
+                  <h5 className="font-weight-bold mb-0">{policy.policyType}</h5>
+                  <small className="text-muted">#{policy.policyNumber}</small>
+                </ClayTable.Cell>
 
-              <ClayTable.Cell>{policy.startDate} - {policy.endDate}</ClayTable.Cell>
-              <ClayTable.Cell align="right">{policy.transactions}</ClayTable.Cell>
+                <ClayTable.Cell>{policy.effectiveDate} - {policy.expirationDate}</ClayTable.Cell>
+                <ClayTable.Cell align="right">{policy.numTransactions}</ClayTable.Cell>
 
-              <ClayTable.Cell align="right" className="h3 font-weight-bold">
-                <NumberFormat value={policy.amountBilled} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-              </ClayTable.Cell>
+                <ClayTable.Cell align="right" className="h3 font-weight-bold">
+                  <NumberFormat value={policy.totalBilledPremium} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                </ClayTable.Cell>
 
-              <ClayTable.Cell align="right">
-                <ClayButton
-                  displayType="unstyled"
-                  monospaced
-                  className="text-primary"
-                  onClick={(e) => download(e)}>
-                  <ClayIcon symbol={"download"} spritemap={spritemap} className="lexicon-icon-lg" />
-                </ClayButton>
-              </ClayTable.Cell>
-            </ClayTable.Row>
-          ))}
-        </ClayTable.Body>
+                <ClayTable.Cell align="right">
+                  <ClayButton
+                    displayType="unstyled"
+                    monospaced
+                    className="text-primary"
+                    onClick={(e) => download(e)}>
+                    <ClayIcon symbol={"download"} spritemap={spritemap} className="lexicon-icon-lg" />
+                  </ClayButton>
+                </ClayTable.Cell>
+              </ClayTable.Row>
+            ))}
+          </ClayTable.Body>
+        }
       </ClayTable>
     );
   }

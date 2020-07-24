@@ -83,8 +83,8 @@ public class CMICUserServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray getGroupOtherUsers(
-			long groupId)
+	public java.util.List<com.churchmutual.core.model.CMICUserDisplay>
+			getGroupOtherUsers(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cmicUserService.getGroupOtherUsers(groupId);
@@ -108,23 +108,26 @@ public class CMICUserServiceWrapper
 	}
 
 	@Override
-	public java.util.List<String> getRecentlyViewedAccountNumbers()
+	public java.util.List<com.churchmutual.core.model.CMICAccountEntryDisplay>
+			getRecentlyViewedCMICAccountEntryDisplays()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cmicUserService.getRecentlyViewedAccountNumbers();
+		return _cmicUserService.getRecentlyViewedCMICAccountEntryDisplays();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.User getUser(String cmicUUID) {
-		return _cmicUserService.getUser(cmicUUID);
+	public com.churchmutual.core.model.CMICUserDisplay getUserDetails()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicUserService.getUserDetails();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONObject getUserDetails(
-			long groupId)
+	public com.churchmutual.core.model.CMICUserDisplay
+			getUserDetailsWithRoleAndStatus(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cmicUserService.getUserDetails(groupId);
+		return _cmicUserService.getUserDetailsWithRoleAndStatus(groupId);
 	}
 
 	@Override

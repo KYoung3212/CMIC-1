@@ -279,8 +279,8 @@ public class CMICUserServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getGroupOtherUsers(
-			HttpPrincipal httpPrincipal, long groupId)
+	public static java.util.List<com.churchmutual.core.model.CMICUserDisplay>
+			getGroupOtherUsers(HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -307,7 +307,8 @@ public class CMICUserServiceHttp {
 					e);
 			}
 
-			return (com.liferay.portal.kernel.json.JSONArray)returnObj;
+			return (java.util.List<com.churchmutual.core.model.CMICUserDisplay>)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -352,14 +353,17 @@ public class CMICUserServiceHttp {
 		}
 	}
 
-	public static java.util.List<String> getRecentlyViewedAccountNumbers(
-			HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List
+		<com.churchmutual.core.model.CMICAccountEntryDisplay>
+				getRecentlyViewedCMICAccountEntryDisplays(
+					HttpPrincipal httpPrincipal)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CMICUserServiceUtil.class, "getRecentlyViewedAccountNumbers",
-				_getRecentlyViewedAccountNumbersParameterTypes8);
+				CMICUserServiceUtil.class,
+				"getRecentlyViewedCMICAccountEntryDisplays",
+				_getRecentlyViewedCMICAccountEntryDisplaysParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -380,7 +384,8 @@ public class CMICUserServiceHttp {
 					e);
 			}
 
-			return (java.util.List<String>)returnObj;
+			return (java.util.List
+				<com.churchmutual.core.model.CMICAccountEntryDisplay>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -389,15 +394,16 @@ public class CMICUserServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.User getUser(
-		HttpPrincipal httpPrincipal, String cmicUUID) {
+	public static com.churchmutual.core.model.CMICUserDisplay getUserDetails(
+			HttpPrincipal httpPrincipal)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CMICUserServiceUtil.class, "getUser", _getUserParameterTypes9);
+				CMICUserServiceUtil.class, "getUserDetails",
+				_getUserDetailsParameterTypes9);
 
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cmicUUID);
+			MethodHandler methodHandler = new MethodHandler(methodKey);
 
 			Object returnObj = null;
 
@@ -405,11 +411,18 @@ public class CMICUserServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					e);
 			}
 
-			return (com.liferay.portal.kernel.model.User)returnObj;
+			return (com.churchmutual.core.model.CMICUserDisplay)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -418,14 +431,15 @@ public class CMICUserServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.json.JSONObject getUserDetails(
-			HttpPrincipal httpPrincipal, long groupId)
+	public static com.churchmutual.core.model.CMICUserDisplay
+			getUserDetailsWithRoleAndStatus(
+				HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CMICUserServiceUtil.class, "getUserDetails",
-				_getUserDetailsParameterTypes10);
+				CMICUserServiceUtil.class, "getUserDetailsWithRoleAndStatus",
+				_getUserDetailsWithRoleAndStatusParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -446,7 +460,7 @@ public class CMICUserServiceHttp {
 					e);
 			}
 
-			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
+			return (com.churchmutual.core.model.CMICUserDisplay)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -716,12 +730,14 @@ public class CMICUserServiceHttp {
 	private static final Class<?>[] _getPortraitImageURLParameterTypes7 =
 		new Class[] {};
 	private static final Class<?>[]
-		_getRecentlyViewedAccountNumbersParameterTypes8 = new Class[] {};
-	private static final Class<?>[] _getUserParameterTypes9 = new Class[] {
-		String.class
-	};
-	private static final Class<?>[] _getUserDetailsParameterTypes10 =
-		new Class[] {long.class};
+		_getRecentlyViewedCMICAccountEntryDisplaysParameterTypes8 =
+			new Class[] {};
+	private static final Class<?>[] _getUserDetailsParameterTypes9 =
+		new Class[] {};
+	private static final Class<?>[]
+		_getUserDetailsWithRoleAndStatusParameterTypes10 = new Class[] {
+			long.class
+		};
 	private static final Class<?>[] _inviteBusinessMembersParameterTypes11 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _isUserRegisteredParameterTypes12 =

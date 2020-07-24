@@ -56,10 +56,10 @@ class Contacts extends React.Component {
 
     this.setState({
       contactsList: [
-        { firstName: 'Karlie', lastName: 'Schowalter', fullName: 'Karlie Schowalter', title: 'Div Agents: 35-000, 35-001, 35-858', email: 'karlie.schowalter@churchmutal.com', phoneNumber: '715-555-5555' },
-        { firstName: 'Doris', lastName: 'O’Connell', fullName: 'Doris O’Connell', title: 'Div Agents: 49-064', email: 'doris.oconnell@churchmutal.com', phoneNumber: '715-555-5555' },
-        { firstName: 'Elouise', lastName: 'Hintz', fullName: 'Elouise Hintz', title: 'Div Agents: 49-334', email: 'elouise.hintz@churchmutal.com', phoneNumber: '715-555-5555' },
-        { firstName: 'Karlie', lastName: 'Schowalter', fullName: 'Karlie Schowalter', title: 'Div Agents: 35-000, 35-001, 35-858', email: 'karlie.schowalter@churchmutal.com', phoneNumber: '715-555-5555' }
+        { firstName: 'Karlie', lastName: 'Schowalter', fullName: 'Karlie Schowalter', title: 'Producer Code: 35-000, 35-001, 35-858', email: 'karlie.schowalter@churchmutal.com', phoneNumber: '715-555-5555' },
+        { firstName: 'Doris', lastName: 'O’Connell', fullName: 'Doris O’Connell', title: 'Producer Code: 49-064', email: 'doris.oconnell@churchmutal.com', phoneNumber: '715-555-5555' },
+        { firstName: 'Elouise', lastName: 'Hintz', fullName: 'Elouise Hintz', title: 'Producer Code: 49-334', email: 'elouise.hintz@churchmutal.com', phoneNumber: '715-555-5555' },
+        { firstName: 'Karlie', lastName: 'Schowalter', fullName: 'Karlie Schowalter', title: 'Producer Code: 35-000, 35-001, 35-858', email: 'karlie.schowalter@churchmutal.com', phoneNumber: '715-555-5555' }
       ],
       isLoading: false
     });

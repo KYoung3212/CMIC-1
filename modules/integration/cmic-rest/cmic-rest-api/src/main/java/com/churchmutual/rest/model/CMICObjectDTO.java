@@ -25,4 +25,6 @@ public abstract class CMICObjectDTO {
 		return jsonSerializer.serializeDeep(this);
 	}
 
+	protected static final String DEFAULT_COMPANY_NUMBER = "1";
+
 }

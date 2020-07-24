@@ -54,6 +54,11 @@ public class CMICProducerServiceScreenNavigationEntry extends BaseTestHarnessScr
 
 		getContactsDescriptor.addQueryParameters(producerId);
 
+		HarnessDescriptor getPrimaryContactDescriptor = new HarnessDescriptor(
+			"Get primary contact info for the producer.", _GET_PRIMARY_CONTACT_ENDPOINT, Http.Method.GET);
+
+		getPrimaryContactDescriptor.addQueryParameters(producerId);
+
 		HarnessDescriptor getProducerByIdDescriptor = new HarnessDescriptor(
 			"Get a producer by its id.", _GET_PRODUCER_BY_ID_ENDPOINT, Http.Method.GET);
 
@@ -86,7 +91,8 @@ public class CMICProducerServiceScreenNavigationEntry extends BaseTestHarnessScr
 		getRoleAssignmentsDescriptor.addQueryParameters(producerId);
 
 		return ListUtil.fromArray(
-			getContactsDescriptor, getProducerByIdDescriptor, getProducersDescriptor, getRoleAssignmentsDescriptor);
+			getContactsDescriptor, getPrimaryContactDescriptor, getProducerByIdDescriptor, getProducersDescriptor,
+			getRoleAssignmentsDescriptor);
 	}
 
 	@Override
@@ -118,6 +124,13 @@ public class CMICProducerServiceScreenNavigationEntry extends BaseTestHarnessScr
 
 				contacts.forEach(contact -> response.put(contact.toJSONObject()));
 			}
+			else if (_GET_PRIMARY_CONTACT_ENDPOINT.equals(endpoint)) {
+				long producerId = ParamUtil.getLong(portletRequest, "producerId");
+
+				CMICContactDTO contact = _producerWebService.getPrimaryContact(producerId);
+
+				response.put(contact.toJSONObject());
+			}
 			else if (_GET_PRODUCER_BY_ID_ENDPOINT.equals(endpoint)) {
 				long id = ParamUtil.getLong(portletRequest, "id");
 
@@ -129,7 +142,7 @@ public class CMICProducerServiceScreenNavigationEntry extends BaseTestHarnessScr
 				String agent = ParamUtil.getString(portletRequest, "agent");
 				String division = ParamUtil.getString(portletRequest, "division");
 				String name = ParamUtil.getString(portletRequest, "name");
-				boolean payOutOfCdms = ParamUtil.getBoolean(portletRequest, "payOutOfCdms");
+				Boolean payOutOfCdms = ParamUtil.getBoolean(portletRequest, "payOutOfCdms");
 
 				List<CMICProducerDTO> producers = _producerWebService.getProducers(agent, division, name, payOutOfCdms);
 
@@ -155,6 +168,8 @@ public class CMICProducerServiceScreenNavigationEntry extends BaseTestHarnessScr
 	}
 
 	private static final String _GET_CONTACTS_ENDPOINT = "/v1/contacts";
+
+	private static final String _GET_PRIMARY_CONTACT_ENDPOINT = "/v1/contacts/with-assignment";
 
 	private static final String _GET_PRODUCER_BY_ID_ENDPOINT = "/v1/producers/{id}";
 

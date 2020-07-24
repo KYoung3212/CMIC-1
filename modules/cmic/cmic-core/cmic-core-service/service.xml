@@ -26,10 +26,16 @@
 		<finder name="AccountEntryId" return-type="CMICAccountEntry" unique="true">
 			<finder-column name="accountEntryId" />
 		</finder>
-		<finder name="AccountNumber" return-type="CMICAccountEntry" unique="true">
+		<finder name="AN_CN" return-type="CMICAccountEntry" unique="true">
 			<finder-column name="accountNumber" />
+			<finder-column name="companyNumber" />
 		</finder>
 	</entity>
+
+	<entity local-service="true" name="CMICCommissionDocument" remote-service="true" />
+
+	<entity local-service="true" name="CMICContact" remote-service="true" />
+
 	<entity local-service="true" name="CMICOrganization" remote-service="true">
 
 		<!-- PK fields -->
@@ -53,12 +59,24 @@
 		<finder name="ProducerId" return-type="CMICOrganization">
 			<finder-column name="producerId" />
 		</finder>
+		<reference entity="Address" package-path="com.liferay.portal" />
+		<reference entity="ListType" package-path="com.liferay.portal" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="Phone" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="CMICCommissionDocument" remote-service="true" />
-	<entity local-service="true" name="CMICContact" remote-service="true" />
+
 	<entity local-service="true" name="CMICPolicy" remote-service="true" />
+
 	<entity local-service="true" name="CMICTransaction" remote-service="true" />
-	<entity local-service="true" name="CMICUser" remote-service="true" />
+
+	<entity local-service="true" name="CMICUser" remote-service="true">
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="Role" package-path="com.liferay.portal" />
+		<reference entity="UserGroup" package-path="com.liferay.portal" />
+		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
+	</entity>
+
 	<exceptions>
 		<exception>NoSuchCMICCommissionDocument</exception>
 	</exceptions>

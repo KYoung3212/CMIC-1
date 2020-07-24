@@ -88,49 +88,57 @@ public interface CMICAccountEntryPersistence
 	public int countByAccountEntryId(long accountEntryId);
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or throws a <code>NoSuchCMICAccountEntryException</code> if it could not be found.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or throws a <code>NoSuchCMICAccountEntryException</code> if it could not be found.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the matching cmic account entry
 	 * @throws NoSuchCMICAccountEntryException if a matching cmic account entry could not be found
 	 */
-	public CMICAccountEntry findByAccountNumber(String accountNumber)
+	public CMICAccountEntry findByAN_CN(
+			String accountNumber, String companyNumber)
 		throws NoSuchCMICAccountEntryException;
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the matching cmic account entry, or <code>null</code> if a matching cmic account entry could not be found
 	 */
-	public CMICAccountEntry fetchByAccountNumber(String accountNumber);
+	public CMICAccountEntry fetchByAN_CN(
+		String accountNumber, String companyNumber);
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cmic account entry, or <code>null</code> if a matching cmic account entry could not be found
 	 */
-	public CMICAccountEntry fetchByAccountNumber(
-		String accountNumber, boolean useFinderCache);
+	public CMICAccountEntry fetchByAN_CN(
+		String accountNumber, String companyNumber, boolean useFinderCache);
 
 	/**
-	 * Removes the cmic account entry where accountNumber = &#63; from the database.
+	 * Removes the cmic account entry where accountNumber = &#63; and companyNumber = &#63; from the database.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the cmic account entry that was removed
 	 */
-	public CMICAccountEntry removeByAccountNumber(String accountNumber)
+	public CMICAccountEntry removeByAN_CN(
+			String accountNumber, String companyNumber)
 		throws NoSuchCMICAccountEntryException;
 
 	/**
-	 * Returns the number of cmic account entries where accountNumber = &#63;.
+	 * Returns the number of cmic account entries where accountNumber = &#63; and companyNumber = &#63;.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the number of matching cmic account entries
 	 */
-	public int countByAccountNumber(String accountNumber);
+	public int countByAN_CN(String accountNumber, String companyNumber);
 
 	/**
 	 * Caches the cmic account entry in the entity cache if it is enabled.

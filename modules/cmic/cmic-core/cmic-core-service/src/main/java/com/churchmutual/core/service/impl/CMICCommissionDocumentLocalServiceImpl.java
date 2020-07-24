@@ -28,7 +28,6 @@ import com.churchmutual.rest.model.CMICFileDTO;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.time.LocalDate;
@@ -60,7 +59,7 @@ public class CMICCommissionDocumentLocalServiceImpl extends CMICCommissionDocume
 
 	@Override
 	public CMICCommissionDocumentDisplay downloadDocument(String id) throws PortalException {
-		List<CMICFileDTO> cmicFileDTOS = _commissionDocumentWebService.downloadDocuments(new String[] {id}, true);
+		List<CMICFileDTO> cmicFileDTOS = commissionDocumentWebService.downloadDocuments(new String[] {id}, true);
 
 		if (ListUtil.isEmpty(cmicFileDTOS)) {
 			throw new NoSuchCMICCommissionDocumentException(id);
@@ -73,7 +72,7 @@ public class CMICCommissionDocumentLocalServiceImpl extends CMICCommissionDocume
 	public List<CMICCommissionDocumentDisplay> getCommissionDocuments(long userId) throws PortalException {
 		List<CMICCommissionDocumentDisplay> cmicCommissionDocumentDisplays = new ArrayList<>();
 
-		List<CMICOrganization> userOrganizations = _cmicOrganizationLocalService.getCMICUserOrganizations(userId);
+		List<CMICOrganization> userOrganizations = cmicOrganizationLocalService.getCMICOrganizationsByUserId(userId);
 
 		LocalDate now = LocalDate.now();
 
@@ -86,18 +85,14 @@ public class CMICCommissionDocumentLocalServiceImpl extends CMICCommissionDocume
 
 		for (CMICOrganization cmicOrganization : userOrganizations) {
 			for (CommissionDocumentType documentType : CommissionDocumentType.values()) {
-				List<CMICCommissionDocumentDTO> commissionDocumentDTOs = _commissionDocumentWebService.searchDocuments(
+				List<CMICCommissionDocumentDTO> commissionDocumentDTOs = commissionDocumentWebService.searchDocuments(
 					cmicOrganization.getAgentNumber(), cmicOrganization.getDivisionNumber(), documentType.toString(),
 					maximumStatementDate, minimumStatementDate);
 
-				long producerId = cmicOrganization.getProducerId();
-
 				commissionDocumentDTOs.stream(
 				).forEach(
-					commissionDocumentDTO -> {
-						cmicCommissionDocumentDisplays.add(
-							new CMICCommissionDocumentDisplay(commissionDocumentDTO, String.valueOf(producerId)));
-					}
+					commissionDocumentDTO -> cmicCommissionDocumentDisplays.add(
+						new CMICCommissionDocumentDisplay(commissionDocumentDTO))
 				);
 			}
 		}
@@ -106,18 +101,15 @@ public class CMICCommissionDocumentLocalServiceImpl extends CMICCommissionDocume
 	}
 
 	@Reference
-	private CMICOrganizationLocalService _cmicOrganizationLocalService;
+	protected CMICOrganizationLocalService cmicOrganizationLocalService;
 
 	@Reference
-	private CommissionDocumentWebService _commissionDocumentWebService;
+	protected CommissionDocumentWebService commissionDocumentWebService;
 
 	@Reference
-	private JSONFactory _jsonFactory;
+	protected JSONFactory jsonFactory;
 
 	@Reference
-	private PortalUserWebService _portalUserWebService;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	protected PortalUserWebService portalUserWebService;
 
 }

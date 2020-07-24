@@ -32,6 +32,16 @@ public class MockProducerWebServiceClient {
 		return ListUtil.fromArray(cmicContactDTOS);
 	}
 
+	public CMICContactDTO getPrimaryContact(long producerId) {
+		String fileName = _PRODUCER_WEB_SERVICE_DIR + "getPrimaryContact.json";
+
+		String fileContent = MockResponseReaderUtil.readFile(fileName);
+
+		JSONDeserializer<CMICContactDTO> jsonDeserializer = _jsonFactory.createJSONDeserializer();
+
+		return jsonDeserializer.deserialize(fileContent, CMICContactDTO.class);
+	}
+
 	public CMICProducerDTO getProducerById(long id) {
 		String fileName = _PRODUCER_WEB_SERVICE_DIR + "getProducerById.json";
 
@@ -42,7 +52,7 @@ public class MockProducerWebServiceClient {
 		return jsonDeserializer.deserialize(fileContent, CMICProducerDTO.class);
 	}
 
-	public List<CMICProducerDTO> getProducers(String agent, String division, String name, boolean payOutOfCdms) {
+	public List<CMICProducerDTO> getProducers(String agent, String division, String name, Boolean payOutOfCdms) {
 		String fileName = _PRODUCER_WEB_SERVICE_DIR + "getProducers.json";
 
 		String fileContent = MockResponseReaderUtil.readFile(fileName);

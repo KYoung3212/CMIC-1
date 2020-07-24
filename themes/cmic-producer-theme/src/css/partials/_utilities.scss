@@ -20,6 +20,10 @@
 	background: linear-gradient(180deg, rgba($white, 0) 0%, rgba($white, 0.921875) 72.4%, $white 100%);
 }
 
+.bg-primary-light {
+	background-color: $component-active-bg !important;
+}
+
 @each $type in $cursor-types {
 	.cursor-#{$type} {
 		cursor: $type;

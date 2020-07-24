@@ -1,3 +1,14 @@
+import com.liferay.gradle.util.OSDetector
+
+buildscript {
+   dependencies {
+      classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "latest.release"
+   }
+   repositories {
+      mavenCentral()
+   }
+}
+
 configure(subprojects.findAll { !it.subprojects }) {
     if (project.path.startsWith(":modules:") && project.file("bnd.bnd").exists()) {
         afterEvaluate { project ->
@@ -24,7 +35,6 @@ configure(subprojects.findAll { !it.subprojects }) {
                 testCompile group: "org.osgi", name: "org.osgi.core"
             }
 
-
             compileJava {
                 options.encoding = 'UTF-8'
             }
@@ -41,3 +51,36 @@ configure(subprojects.findAll { !it.subprojects }) {
         }
     }
 }
+
+subprojects {
+    plugins.withId("com.liferay.node") {
+        def nodeArch
+        def nodeExt
+        def nodeOS
+        def nodeVersion
+
+        if (OSDetector.getBitmode().equals("32")) 
+            nodeArch = "x86"
+        else
+            nodeArch = "x64"
+
+        if (OSDetector.isWindows()) 
+            nodeExt = "zip"
+        else
+            nodeExt = "tar.gz"
+
+        if (OSDetector.isApple()) 
+            nodeOS = "darwin";
+        else if (OSDetector.isWindows()) 
+            nodeOS = "win";
+        else
+            nodeOS = "linux"
+
+        nodeVersion = "10.15.1";
+
+        node {
+            nodeUrl = "https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-${nodeOS}-${nodeArch}.${nodeExt}"
+        }
+    }
+}
+

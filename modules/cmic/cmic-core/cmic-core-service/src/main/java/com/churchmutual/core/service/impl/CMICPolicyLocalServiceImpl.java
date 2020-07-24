@@ -14,11 +14,21 @@
 
 package com.churchmutual.core.service.impl;
 
+import com.churchmutual.core.model.CMICAccountEntry;
+import com.churchmutual.core.model.CMICPolicyDisplay;
+import com.churchmutual.core.service.CMICAccountEntryLocalService;
 import com.churchmutual.core.service.base.CMICPolicyLocalServiceBaseImpl;
+import com.churchmutual.rest.PolicyWebService;
+import com.churchmutual.rest.model.CMICPolicyDTO;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the cmic policy local service.
@@ -36,10 +46,25 @@ import org.osgi.service.component.annotations.Component;
 @Component(property = "model.class.name=com.churchmutual.core.model.CMICPolicy", service = AopService.class)
 public class CMICPolicyLocalServiceImpl extends CMICPolicyLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.churchmutual.core.service.CMICPolicyLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.churchmutual.core.service.CMICPolicyLocalServiceUtil</code>.
-	 */
+	@Override
+	public List<CMICPolicyDisplay> getPolicyDisplays(long cmicAccountEntryId) throws PortalException {
+		CMICAccountEntry cmicAccountEntry = cmicAccountEntryLocalService.getCMICAccountEntry(cmicAccountEntryId);
+
+		List<CMICPolicyDTO> cmicPolicyDTOs = policyWebService.getPoliciesOnAccount(cmicAccountEntry.getAccountNumber());
+
+		List<CMICPolicyDisplay> cmicPolicyDisplays = new ArrayList<>();
+
+		for (CMICPolicyDTO cmicPolicyDTO : cmicPolicyDTOs) {
+			cmicPolicyDisplays.add(new CMICPolicyDisplay(cmicPolicyDTO));
+		}
+
+		return cmicPolicyDisplays;
+	}
+
+	@Reference
+	protected CMICAccountEntryLocalService cmicAccountEntryLocalService;
+
+	@Reference
+	protected PolicyWebService policyWebService;
 
 }

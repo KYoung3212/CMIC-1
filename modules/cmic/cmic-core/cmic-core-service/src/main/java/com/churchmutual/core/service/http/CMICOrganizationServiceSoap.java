@@ -63,16 +63,35 @@ import java.rmi.RemoteException;
 public class CMICOrganizationServiceSoap {
 
 	public static com.churchmutual.core.model.CMICOrganizationSoap
-			getCMICOrganizationByOrganizationId(long organizationId)
+			fetchCMICOrganizationByOrganizationId(long organizationId)
 		throws RemoteException {
 
 		try {
 			com.churchmutual.core.model.CMICOrganization returnValue =
-				CMICOrganizationServiceUtil.getCMICOrganizationByOrganizationId(
-					organizationId);
+				CMICOrganizationServiceUtil.
+					fetchCMICOrganizationByOrganizationId(organizationId);
 
 			return com.churchmutual.core.model.CMICOrganizationSoap.toSoapModel(
 				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.churchmutual.core.model.CMICOrganizationDisplaySoap[]
+			getCMICOrganizationDisplays()
+		throws RemoteException {
+
+		try {
+			java.util.List<com.churchmutual.core.model.CMICOrganizationDisplay>
+				returnValue =
+					CMICOrganizationServiceUtil.getCMICOrganizationDisplays();
+
+			return com.churchmutual.core.model.CMICOrganizationDisplaySoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class CMICCommissionDocumentDisplay {
 
-	public CMICCommissionDocumentDisplay(CMICCommissionDocumentDTO cmicCommissionDocumentDTO, String producerId) {
+	public CMICCommissionDocumentDisplay(CMICCommissionDocumentDTO cmicCommissionDocumentDTO) {
 		String statementDate = _getFormattedStatementDate(cmicCommissionDocumentDTO.getStatementDate());
 
 		_documentId = cmicCommissionDocumentDTO.getId();
@@ -29,12 +29,9 @@ public class CMICCommissionDocumentDisplay {
 			documentType = commissionDocumentType.getName();
 		}
 
-		if (Validator.isBlank(producerId)) {
-			_name = String.format("%s - %s", statementDate, documentType);
-		}
-		else {
-			_name = String.format("%s - %s - %s", statementDate, producerId, documentType);
-		}
+		_name = String.format(
+			"%s - %s-%s - %s", statementDate, cmicCommissionDocumentDTO.getDivsionNumber(),
+			cmicCommissionDocumentDTO.getAgentNumber(), documentType);
 	}
 
 	public CMICCommissionDocumentDisplay(CMICFileDTO cmicFileDTO) {

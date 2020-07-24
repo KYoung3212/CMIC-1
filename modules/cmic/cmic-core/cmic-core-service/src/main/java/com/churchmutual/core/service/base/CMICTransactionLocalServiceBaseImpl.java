@@ -15,6 +15,7 @@
 package com.churchmutual.core.service.base;
 
 import com.churchmutual.core.service.CMICTransactionLocalService;
+import com.churchmutual.core.service.persistence.CMICAccountEntryFinder;
 import com.churchmutual.core.service.persistence.CMICAccountEntryPersistence;
 import com.churchmutual.core.service.persistence.CMICOrganizationPersistence;
 
@@ -102,6 +103,9 @@ public abstract class CMICTransactionLocalServiceBaseImpl
 
 	@Reference
 	protected CMICAccountEntryPersistence cmicAccountEntryPersistence;
+
+	@Reference
+	protected CMICAccountEntryFinder cmicAccountEntryFinder;
 
 	@Reference
 	protected CMICOrganizationPersistence cmicOrganizationPersistence;

@@ -15,6 +15,7 @@
 package com.churchmutual.core.service;
 
 import com.churchmutual.core.model.CMICAccountEntry;
+import com.churchmutual.core.model.CMICAccountEntryDisplay;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -71,6 +72,16 @@ public interface CMICAccountEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CMICAccountEntry addCMICAccountEntry(
 		CMICAccountEntry cmicAccountEntry);
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>CMICAccountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CMICAccountEntryLocalServiceUtil</code>.
+	 */
+	public CMICAccountEntry addOrUpdateCMICAccountEntry(
+			long userId, String accountNumber, String companyNumber,
+			String accountName, long producerId, String producerCode)
+		throws PortalException;
 
 	/**
 	 * Creates a new cmic account entry with the primary key. Does not add the cmic account entry to the database.
@@ -179,6 +190,14 @@ public interface CMICAccountEntryLocalService
 	public CMICAccountEntry fetchCMICAccountEntry(long cmicAccountEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CMICAccountEntry fetchCMICAccountEntry(
+		String accountNumber, String companyNumber);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getAccountEntryName(CMICAccountEntry cmicAccountEntry)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -194,6 +213,13 @@ public interface CMICAccountEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CMICAccountEntry> getCMICAccountEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CMICAccountEntry> getCMICAccountEntriesByUserId(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CMICAccountEntry> getCMICAccountEntriesByUserIdOrderedByName(
+		long userId, int start, int end);
 
 	/**
 	 * Returns the number of cmic account entries.
@@ -215,7 +241,29 @@ public interface CMICAccountEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CMICAccountEntry getCMICAccountEntry(
+			String accountNumber, String companyNumber)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CMICAccountEntryDisplay getCMICAccountEntryDisplay(
+			String cmicAccountEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CMICAccountEntryDisplay> getCMICAccountEntryDisplays(
+		List<String> cmicAccountEntryIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CMICAccountEntryDisplay> getCMICAccountEntryDisplays(
+		long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getOrganizationName(CMICAccountEntry cmicAccountEntry)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -229,6 +277,10 @@ public interface CMICAccountEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getProducerCode(CMICAccountEntry cmicAccountEntry)
+		throws PortalException;
+
 	/**
 	 * Updates the cmic account entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -238,5 +290,9 @@ public interface CMICAccountEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CMICAccountEntry updateCMICAccountEntry(
 		CMICAccountEntry cmicAccountEntry);
+
+	public void updateCMICAccountEntryDetails(
+			List<CMICAccountEntry> cmicAccountEntries)
+		throws PortalException;
 
 }

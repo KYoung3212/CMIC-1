@@ -1,5 +1,19 @@
-.dropdown-item,
-.dropdown-menu > li > a,
-.dropdown-menu .link-list > li > a {
-	text-decoration: none;
+.dropdown-menu {
+
+	.inline-scroller > .list-unstyled {
+		margin-bottom: 0;
+	}
+}
+
+.dropdown-item {
+
+	&,
+	& > li > a,
+	& .link-list > li > a {
+		text-decoration: none;
+	}
+
+	.dropdown-menu-indicator-end &:not(.active) .dropdown-item-indicator-end {
+		display: none;
+	}
 }

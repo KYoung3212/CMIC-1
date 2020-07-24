@@ -14,14 +14,22 @@
 
 package com.churchmutual.core.service.http;
 
+import com.churchmutual.core.service.CMICPolicyServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 
 /**
  * Provides the HTTP utility for the
- * <code>com.churchmutual.core.service.CMICPolicyServiceUtil</code> service
+ * <code>CMICPolicyServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -43,4 +51,51 @@ package com.churchmutual.core.service.http;
  * @generated
  */
 public class CMICPolicyServiceHttp {
+
+	public static java.util.List<com.churchmutual.core.model.CMICPolicyDisplay>
+			getPolicyDisplays(
+				HttpPrincipal httpPrincipal, long cmicAccountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CMICPolicyServiceUtil.class, "getPolicyDisplays",
+				_getPolicyDisplaysParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cmicAccountEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (java.util.List
+				<com.churchmutual.core.model.CMICPolicyDisplay>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CMICPolicyServiceHttp.class);
+
+	private static final Class<?>[] _getPolicyDisplaysParameterTypes0 =
+		new Class[] {long.class};
+
 }

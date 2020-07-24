@@ -5,6 +5,10 @@ package com.churchmutual.rest.model;
  */
 public class CMICProducerDTO extends CMICObjectDTO {
 
+	public String getAgent() {
+		return _agent;
+	}
+
 	public String getDivision() {
 		return _division;
 	}
@@ -23,6 +27,10 @@ public class CMICProducerDTO extends CMICObjectDTO {
 
 	public String getStatus() {
 		return _status;
+	}
+
+	public void setAgent(String agent) {
+		_agent = agent;
 	}
 
 	public void setDivision(String division) {
@@ -45,6 +53,7 @@ public class CMICProducerDTO extends CMICObjectDTO {
 		_status = status;
 	}
 
+	private String _agent;
 	private String _division;
 	private long _id;
 	private String _name;

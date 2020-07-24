@@ -34,6 +34,28 @@ public class CMICAccountEntryServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link CMICAccountEntryServiceUtil} to access the cmic account entry remote service. Add custom service methods to <code>com.churchmutual.core.service.impl.CMICAccountEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
+	@Override
+	public com.churchmutual.core.model.CMICAccountEntryDisplay
+			getCMICAccountEntryDisplay(String cmicAccountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryService.getCMICAccountEntryDisplay(
+			cmicAccountEntryId);
+	}
+
+	@Override
+	public java.util.List<com.churchmutual.core.model.CMICAccountEntryDisplay>
+			getCMICAccountEntryDisplays()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryService.getCMICAccountEntryDisplays();
+	}
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

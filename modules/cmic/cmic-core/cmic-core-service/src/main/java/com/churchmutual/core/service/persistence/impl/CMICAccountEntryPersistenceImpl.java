@@ -293,29 +293,35 @@ public class CMICAccountEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2 =
 		"cmicAccountEntry.accountEntryId = ?";
 
-	private FinderPath _finderPathFetchByAccountNumber;
-	private FinderPath _finderPathCountByAccountNumber;
+	private FinderPath _finderPathFetchByAN_CN;
+	private FinderPath _finderPathCountByAN_CN;
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or throws a <code>NoSuchCMICAccountEntryException</code> if it could not be found.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or throws a <code>NoSuchCMICAccountEntryException</code> if it could not be found.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the matching cmic account entry
 	 * @throws NoSuchCMICAccountEntryException if a matching cmic account entry could not be found
 	 */
 	@Override
-	public CMICAccountEntry findByAccountNumber(String accountNumber)
+	public CMICAccountEntry findByAN_CN(
+			String accountNumber, String companyNumber)
 		throws NoSuchCMICAccountEntryException {
 
-		CMICAccountEntry cmicAccountEntry = fetchByAccountNumber(accountNumber);
+		CMICAccountEntry cmicAccountEntry = fetchByAN_CN(
+			accountNumber, companyNumber);
 
 		if (cmicAccountEntry == null) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(6);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("accountNumber=");
 			msg.append(accountNumber);
+
+			msg.append(", companyNumber=");
+			msg.append(companyNumber);
 
 			msg.append("}");
 
@@ -330,66 +336,84 @@ public class CMICAccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the matching cmic account entry, or <code>null</code> if a matching cmic account entry could not be found
 	 */
 	@Override
-	public CMICAccountEntry fetchByAccountNumber(String accountNumber) {
-		return fetchByAccountNumber(accountNumber, true);
+	public CMICAccountEntry fetchByAN_CN(
+		String accountNumber, String companyNumber) {
+
+		return fetchByAN_CN(accountNumber, companyNumber, true);
 	}
 
 	/**
-	 * Returns the cmic account entry where accountNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cmic account entry where accountNumber = &#63; and companyNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cmic account entry, or <code>null</code> if a matching cmic account entry could not be found
 	 */
 	@Override
-	public CMICAccountEntry fetchByAccountNumber(
-		String accountNumber, boolean useFinderCache) {
+	public CMICAccountEntry fetchByAN_CN(
+		String accountNumber, String companyNumber, boolean useFinderCache) {
 
 		accountNumber = Objects.toString(accountNumber, "");
+		companyNumber = Objects.toString(companyNumber, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {accountNumber};
+			finderArgs = new Object[] {accountNumber, companyNumber};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByAccountNumber, finderArgs, this);
+				_finderPathFetchByAN_CN, finderArgs, this);
 		}
 
 		if (result instanceof CMICAccountEntry) {
 			CMICAccountEntry cmicAccountEntry = (CMICAccountEntry)result;
 
 			if (!Objects.equals(
-					accountNumber, cmicAccountEntry.getAccountNumber())) {
+					accountNumber, cmicAccountEntry.getAccountNumber()) ||
+				!Objects.equals(
+					companyNumber, cmicAccountEntry.getCompanyNumber())) {
 
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_SELECT_CMICACCOUNTENTRY_WHERE);
 
 			boolean bindAccountNumber = false;
 
 			if (accountNumber.isEmpty()) {
-				query.append(_FINDER_COLUMN_ACCOUNTNUMBER_ACCOUNTNUMBER_3);
+				query.append(_FINDER_COLUMN_AN_CN_ACCOUNTNUMBER_3);
 			}
 			else {
 				bindAccountNumber = true;
 
-				query.append(_FINDER_COLUMN_ACCOUNTNUMBER_ACCOUNTNUMBER_2);
+				query.append(_FINDER_COLUMN_AN_CN_ACCOUNTNUMBER_2);
+			}
+
+			boolean bindCompanyNumber = false;
+
+			if (companyNumber.isEmpty()) {
+				query.append(_FINDER_COLUMN_AN_CN_COMPANYNUMBER_3);
+			}
+			else {
+				bindCompanyNumber = true;
+
+				query.append(_FINDER_COLUMN_AN_CN_COMPANYNUMBER_2);
 			}
 
 			String sql = query.toString();
@@ -407,12 +431,16 @@ public class CMICAccountEntryPersistenceImpl
 					qPos.add(accountNumber);
 				}
 
+				if (bindCompanyNumber) {
+					qPos.add(companyNumber);
+				}
+
 				List<CMICAccountEntry> list = q.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByAccountNumber, finderArgs, list);
+							_finderPathFetchByAN_CN, finderArgs, list);
 					}
 				}
 				else {
@@ -426,7 +454,7 @@ public class CMICAccountEntryPersistenceImpl
 			catch (Exception e) {
 				if (useFinderCache) {
 					finderCache.removeResult(
-						_finderPathFetchByAccountNumber, finderArgs);
+						_finderPathFetchByAN_CN, finderArgs);
 				}
 
 				throw processException(e);
@@ -445,50 +473,66 @@ public class CMICAccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the cmic account entry where accountNumber = &#63; from the database.
+	 * Removes the cmic account entry where accountNumber = &#63; and companyNumber = &#63; from the database.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the cmic account entry that was removed
 	 */
 	@Override
-	public CMICAccountEntry removeByAccountNumber(String accountNumber)
+	public CMICAccountEntry removeByAN_CN(
+			String accountNumber, String companyNumber)
 		throws NoSuchCMICAccountEntryException {
 
-		CMICAccountEntry cmicAccountEntry = findByAccountNumber(accountNumber);
+		CMICAccountEntry cmicAccountEntry = findByAN_CN(
+			accountNumber, companyNumber);
 
 		return remove(cmicAccountEntry);
 	}
 
 	/**
-	 * Returns the number of cmic account entries where accountNumber = &#63;.
+	 * Returns the number of cmic account entries where accountNumber = &#63; and companyNumber = &#63;.
 	 *
 	 * @param accountNumber the account number
+	 * @param companyNumber the company number
 	 * @return the number of matching cmic account entries
 	 */
 	@Override
-	public int countByAccountNumber(String accountNumber) {
+	public int countByAN_CN(String accountNumber, String companyNumber) {
 		accountNumber = Objects.toString(accountNumber, "");
+		companyNumber = Objects.toString(companyNumber, "");
 
-		FinderPath finderPath = _finderPathCountByAccountNumber;
+		FinderPath finderPath = _finderPathCountByAN_CN;
 
-		Object[] finderArgs = new Object[] {accountNumber};
+		Object[] finderArgs = new Object[] {accountNumber, companyNumber};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_CMICACCOUNTENTRY_WHERE);
 
 			boolean bindAccountNumber = false;
 
 			if (accountNumber.isEmpty()) {
-				query.append(_FINDER_COLUMN_ACCOUNTNUMBER_ACCOUNTNUMBER_3);
+				query.append(_FINDER_COLUMN_AN_CN_ACCOUNTNUMBER_3);
 			}
 			else {
 				bindAccountNumber = true;
 
-				query.append(_FINDER_COLUMN_ACCOUNTNUMBER_ACCOUNTNUMBER_2);
+				query.append(_FINDER_COLUMN_AN_CN_ACCOUNTNUMBER_2);
+			}
+
+			boolean bindCompanyNumber = false;
+
+			if (companyNumber.isEmpty()) {
+				query.append(_FINDER_COLUMN_AN_CN_COMPANYNUMBER_3);
+			}
+			else {
+				bindCompanyNumber = true;
+
+				query.append(_FINDER_COLUMN_AN_CN_COMPANYNUMBER_2);
 			}
 
 			String sql = query.toString();
@@ -504,6 +548,10 @@ public class CMICAccountEntryPersistenceImpl
 
 				if (bindAccountNumber) {
 					qPos.add(accountNumber);
+				}
+
+				if (bindCompanyNumber) {
+					qPos.add(companyNumber);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -523,11 +571,17 @@ public class CMICAccountEntryPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACCOUNTNUMBER_ACCOUNTNUMBER_2 =
-		"cmicAccountEntry.accountNumber = ?";
+	private static final String _FINDER_COLUMN_AN_CN_ACCOUNTNUMBER_2 =
+		"cmicAccountEntry.accountNumber = ? AND ";
 
-	private static final String _FINDER_COLUMN_ACCOUNTNUMBER_ACCOUNTNUMBER_3 =
-		"(cmicAccountEntry.accountNumber IS NULL OR cmicAccountEntry.accountNumber = '')";
+	private static final String _FINDER_COLUMN_AN_CN_ACCOUNTNUMBER_3 =
+		"(cmicAccountEntry.accountNumber IS NULL OR cmicAccountEntry.accountNumber = '') AND ";
+
+	private static final String _FINDER_COLUMN_AN_CN_COMPANYNUMBER_2 =
+		"cmicAccountEntry.companyNumber = ?";
+
+	private static final String _FINDER_COLUMN_AN_CN_COMPANYNUMBER_3 =
+		"(cmicAccountEntry.companyNumber IS NULL OR cmicAccountEntry.companyNumber = '')";
 
 	public CMICAccountEntryPersistenceImpl() {
 		setModelClass(CMICAccountEntry.class);
@@ -553,8 +607,11 @@ public class CMICAccountEntryPersistenceImpl
 			cmicAccountEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByAccountNumber,
-			new Object[] {cmicAccountEntry.getAccountNumber()},
+			_finderPathFetchByAN_CN,
+			new Object[] {
+				cmicAccountEntry.getAccountNumber(),
+				cmicAccountEntry.getCompanyNumber()
+			},
 			cmicAccountEntry);
 
 		cmicAccountEntry.resetOriginalValues();
@@ -644,13 +701,15 @@ public class CMICAccountEntryPersistenceImpl
 			_finderPathFetchByAccountEntryId, args, cmicAccountEntryModelImpl,
 			false);
 
-		args = new Object[] {cmicAccountEntryModelImpl.getAccountNumber()};
+		args = new Object[] {
+			cmicAccountEntryModelImpl.getAccountNumber(),
+			cmicAccountEntryModelImpl.getCompanyNumber()
+		};
 
 		finderCache.putResult(
-			_finderPathCountByAccountNumber, args, Long.valueOf(1), false);
+			_finderPathCountByAN_CN, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByAccountNumber, args, cmicAccountEntryModelImpl,
-			false);
+			_finderPathFetchByAN_CN, args, cmicAccountEntryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -679,22 +738,24 @@ public class CMICAccountEntryPersistenceImpl
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-				cmicAccountEntryModelImpl.getAccountNumber()
+				cmicAccountEntryModelImpl.getAccountNumber(),
+				cmicAccountEntryModelImpl.getCompanyNumber()
 			};
 
-			finderCache.removeResult(_finderPathCountByAccountNumber, args);
-			finderCache.removeResult(_finderPathFetchByAccountNumber, args);
+			finderCache.removeResult(_finderPathCountByAN_CN, args);
+			finderCache.removeResult(_finderPathFetchByAN_CN, args);
 		}
 
 		if ((cmicAccountEntryModelImpl.getColumnBitmask() &
-			 _finderPathFetchByAccountNumber.getColumnBitmask()) != 0) {
+			 _finderPathFetchByAN_CN.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cmicAccountEntryModelImpl.getOriginalAccountNumber()
+				cmicAccountEntryModelImpl.getOriginalAccountNumber(),
+				cmicAccountEntryModelImpl.getOriginalCompanyNumber()
 			};
 
-			finderCache.removeResult(_finderPathCountByAccountNumber, args);
-			finderCache.removeResult(_finderPathFetchByAccountNumber, args);
+			finderCache.removeResult(_finderPathCountByAN_CN, args);
+			finderCache.removeResult(_finderPathFetchByAN_CN, args);
 		}
 	}
 
@@ -1175,16 +1236,17 @@ public class CMICAccountEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
 			new String[] {Long.class.getName()});
 
-		_finderPathFetchByAccountNumber = new FinderPath(
+		_finderPathFetchByAN_CN = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, CMICAccountEntryImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByAccountNumber",
-			new String[] {String.class.getName()},
-			CMICAccountEntryModelImpl.ACCOUNTNUMBER_COLUMN_BITMASK);
+			FINDER_CLASS_NAME_ENTITY, "fetchByAN_CN",
+			new String[] {String.class.getName(), String.class.getName()},
+			CMICAccountEntryModelImpl.ACCOUNTNUMBER_COLUMN_BITMASK |
+			CMICAccountEntryModelImpl.COMPANYNUMBER_COLUMN_BITMASK);
 
-		_finderPathCountByAccountNumber = new FinderPath(
+		_finderPathCountByAN_CN = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountNumber",
-			new String[] {String.class.getName()});
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAN_CN",
+			new String[] {String.class.getName(), String.class.getName()});
 	}
 
 	@Deactivate

@@ -15,6 +15,7 @@
 package com.churchmutual.core.service;
 
 import com.churchmutual.core.model.CMICOrganization;
+import com.churchmutual.core.model.CMICOrganizationDisplay;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -71,6 +72,9 @@ public interface CMICOrganizationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CMICOrganization addCMICOrganization(
 		CMICOrganization cmicOrganization);
+
+	public CMICOrganization addCMICOrganization(long userId, long producerId)
+		throws PortalException;
 
 	/**
 	 * Creates a new cmic organization with the primary key. Does not add the cmic organization to the database.
@@ -179,6 +183,14 @@ public interface CMICOrganizationLocalService
 	public CMICOrganization fetchCMICOrganization(long cmicOrganizationId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CMICOrganization fetchCMICOrganizationByOrganizationId(
+		long organizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CMICOrganization fetchCMICOrganizationByProducerId(long producerId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -193,8 +205,9 @@ public interface CMICOrganizationLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CMICOrganization getCMICOrganizationByOrganizationId(
-		long organizationId);
+	public List<CMICOrganizationDisplay> getCMICOrganizationDisplays(
+			long userId)
+		throws PortalException;
 
 	/**
 	 * Returns a range of all the cmic organizations.
@@ -210,6 +223,9 @@ public interface CMICOrganizationLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CMICOrganization> getCMICOrganizations(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CMICOrganization> getCMICOrganizationsByUserId(long userId);
+
 	/**
 	 * Returns the number of cmic organizations.
 	 *
@@ -217,10 +233,6 @@ public interface CMICOrganizationLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCMICOrganizationsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CMICOrganization> getCMICUserOrganizations(long userId)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -246,5 +258,9 @@ public interface CMICOrganizationLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CMICOrganization updateCMICOrganization(
 		CMICOrganization cmicOrganization);
+
+	public CMICOrganization updateCMICOrganizationContactInfo(
+			long userId, long producerId)
+		throws PortalException;
 
 }

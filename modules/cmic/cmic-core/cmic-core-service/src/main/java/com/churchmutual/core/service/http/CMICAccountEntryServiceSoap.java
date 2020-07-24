@@ -14,10 +14,16 @@
 
 package com.churchmutual.core.service.http;
 
+import com.churchmutual.core.service.CMICAccountEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * <code>com.churchmutual.core.service.CMICAccountEntryServiceUtil</code> service
+ * <code>CMICAccountEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -55,4 +61,45 @@ package com.churchmutual.core.service.http;
  * @generated
  */
 public class CMICAccountEntryServiceSoap {
+
+	public static com.churchmutual.core.model.CMICAccountEntryDisplay
+			getCMICAccountEntryDisplay(String cmicAccountEntryId)
+		throws RemoteException {
+
+		try {
+			com.churchmutual.core.model.CMICAccountEntryDisplay returnValue =
+				CMICAccountEntryServiceUtil.getCMICAccountEntryDisplay(
+					cmicAccountEntryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.churchmutual.core.model.CMICAccountEntryDisplaySoap[]
+			getCMICAccountEntryDisplays()
+		throws RemoteException {
+
+		try {
+			java.util.List<com.churchmutual.core.model.CMICAccountEntryDisplay>
+				returnValue =
+					CMICAccountEntryServiceUtil.getCMICAccountEntryDisplays();
+
+			return com.churchmutual.core.model.CMICAccountEntryDisplaySoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CMICAccountEntryServiceSoap.class);
+
 }

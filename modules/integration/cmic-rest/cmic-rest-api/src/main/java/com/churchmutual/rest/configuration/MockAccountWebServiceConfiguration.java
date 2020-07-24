@@ -21,7 +21,7 @@ public interface MockAccountWebServiceConfiguration {
 	public boolean enableMockGetAccounts();
 
 	@Meta.AD(
-		deflt = "true", description = "Enable mock for Account Service method /v1/accounts/search/by-producer",
+		deflt = "false", description = "Enable mock for Account Service method /v1/accounts/search/by-producer",
 		required = false
 	)
 	public boolean enableMockGetAccountsSearchByProducer();

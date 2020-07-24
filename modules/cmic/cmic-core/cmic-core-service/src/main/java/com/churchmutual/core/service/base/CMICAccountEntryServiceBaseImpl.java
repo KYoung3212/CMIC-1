@@ -16,6 +16,7 @@ package com.churchmutual.core.service.base;
 
 import com.churchmutual.core.model.CMICAccountEntry;
 import com.churchmutual.core.service.CMICAccountEntryService;
+import com.churchmutual.core.service.persistence.CMICAccountEntryFinder;
 import com.churchmutual.core.service.persistence.CMICAccountEntryPersistence;
 import com.churchmutual.core.service.persistence.CMICOrganizationPersistence;
 
@@ -115,6 +116,9 @@ public abstract class CMICAccountEntryServiceBaseImpl
 
 	@Reference
 	protected CMICAccountEntryPersistence cmicAccountEntryPersistence;
+
+	@Reference
+	protected CMICAccountEntryFinder cmicAccountEntryFinder;
 
 	@Reference
 	protected CMICOrganizationPersistence cmicOrganizationPersistence;

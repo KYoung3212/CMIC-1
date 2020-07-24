@@ -13,6 +13,10 @@ public class CMICAccountDTO extends CMICObjectDTO {
 		return _accountNumber;
 	}
 
+	public String getCompanyNumber() {
+		return _companyNumber;
+	}
+
 	public String getProducerCode() {
 		return _producerCode;
 	}
@@ -29,6 +33,10 @@ public class CMICAccountDTO extends CMICObjectDTO {
 		_accountNumber = accountNumber;
 	}
 
+	public void setCompanyNumber(String companyNumber) {
+		_companyNumber = companyNumber;
+	}
+
 	public void setProducerCode(String producerCode) {
 		_producerCode = producerCode;
 	}
@@ -39,6 +47,7 @@ public class CMICAccountDTO extends CMICObjectDTO {
 
 	private String _accountName;
 	private String _accountNumber;
+	private String _companyNumber;
 	private String _producerCode;
 	private String _servicingProducerCode;
 

@@ -15,6 +15,7 @@
 package com.churchmutual.core.service.base;
 
 import com.churchmutual.core.service.CMICUserLocalService;
+import com.churchmutual.core.service.persistence.CMICAccountEntryFinder;
 import com.churchmutual.core.service.persistence.CMICAccountEntryPersistence;
 import com.churchmutual.core.service.persistence.CMICOrganizationPersistence;
 
@@ -103,6 +104,9 @@ public abstract class CMICUserLocalServiceBaseImpl
 	protected CMICAccountEntryPersistence cmicAccountEntryPersistence;
 
 	@Reference
+	protected CMICAccountEntryFinder cmicAccountEntryFinder;
+
+	@Reference
 	protected CMICOrganizationPersistence cmicOrganizationPersistence;
 
 	protected CMICUserLocalService cmicUserLocalService;
@@ -116,11 +120,31 @@ public abstract class CMICUserLocalServiceBaseImpl
 		classNameLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.GroupLocalService
+		groupLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.RoleLocalService
+		roleLocalService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserGroupLocalService
+		userGroupLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserGroupRoleLocalService
+		userGroupRoleLocalService;
 
 }

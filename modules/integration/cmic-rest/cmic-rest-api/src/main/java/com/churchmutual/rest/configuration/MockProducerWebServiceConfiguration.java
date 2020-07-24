@@ -18,7 +18,13 @@ public interface MockProducerWebServiceConfiguration {
 	public boolean enableMockGetContacts();
 
 	@Meta.AD(
-		deflt = "true", description = "Enable mock for Producer Service method /v1/producers/{id}", required = false
+		deflt = "false", description = "Enable mock for Producer Service method /v1/contacts/with-assignment",
+		required = false
+	)
+	public boolean enableMockGetPrimaryContact();
+
+	@Meta.AD(
+		deflt = "false", description = "Enable mock for Producer Service method /v1/producers/{id}", required = false
 	)
 	public boolean enableMockGetProducerById();
 

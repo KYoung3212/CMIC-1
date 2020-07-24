@@ -39,7 +39,7 @@ export default class extends React.Component {
     let errCallback = () => this.props.displayErrorMessage('error.unable-to-retrieve-current-business-user');
 
     Liferay.Service(
-      '/cmic.cmicuser/get-user-details',
+      '/cmic.cmicuser/get-user-details-with-role-and-status',
       {
         groupId: groupId
       },

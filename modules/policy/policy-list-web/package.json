@@ -3,13 +3,15 @@
 	"version": "1.0.0",
 	"description": "CMIC Policy List Web",
 	"devDependencies": {
-		"liferay-npm-bundler": "^2.18.5",
-		"liferay-npm-build-support": "^2.18.5",
+		"liferay-npm-bundler": "^2.18.8",
+		"liferay-npm-build-support": "^2.18.8",
 		"copy-webpack-plugin": "4.6.0",
 		"webpack": "4.29.6",
 		"webpack-cli": "3.3.0",
 		"webpack-dev-server": "3.2.1",
 		"babel-cli": "6.26.0",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "1.7.0",
 		"babel-preset-react": "6.24.1",
 		"babel-loader": "7.1.5"

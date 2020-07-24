@@ -47,6 +47,13 @@ public class CMICPolicyLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<com.churchmutual.core.model.CMICPolicyDisplay>
+			getPolicyDisplays(long cmicAccountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getPolicyDisplays(cmicAccountEntryId);
+	}
+
 	public static CMICPolicyLocalService getService() {
 		return _serviceTracker.getService();
 	}

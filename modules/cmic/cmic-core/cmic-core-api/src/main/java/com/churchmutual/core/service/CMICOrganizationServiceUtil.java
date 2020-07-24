@@ -44,10 +44,19 @@ public class CMICOrganizationServiceUtil {
 	 * Never modify or reference this interface directly. Always use {@link CMICOrganizationServiceUtil} to access the cmic organization remote service. Add custom service methods to <code>com.churchmutual.core.service.impl.CMICOrganizationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.churchmutual.core.model.CMICOrganization
-			getCMICOrganizationByOrganizationId(long organizationId)
+			fetchCMICOrganizationByOrganizationId(long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getCMICOrganizationByOrganizationId(organizationId);
+		return getService().fetchCMICOrganizationByOrganizationId(
+			organizationId);
+	}
+
+	public static java.util.List
+		<com.churchmutual.core.model.CMICOrganizationDisplay>
+				getCMICOrganizationDisplays()
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCMICOrganizationDisplays();
 	}
 
 	/**

@@ -85,8 +85,8 @@ public class CMICUserServiceUtil {
 		return getService().getCMICOrganizationUsers(cmicOrganizationId);
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getGroupOtherUsers(
-			long groupId)
+	public static java.util.List<com.churchmutual.core.model.CMICUserDisplay>
+			getGroupOtherUsers(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getGroupOtherUsers(groupId);
@@ -107,23 +107,25 @@ public class CMICUserServiceUtil {
 		return getService().getPortraitImageURL();
 	}
 
-	public static java.util.List<String> getRecentlyViewedAccountNumbers()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List
+		<com.churchmutual.core.model.CMICAccountEntryDisplay>
+				getRecentlyViewedCMICAccountEntryDisplays()
+			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getRecentlyViewedAccountNumbers();
+		return getService().getRecentlyViewedCMICAccountEntryDisplays();
 	}
 
-	public static com.liferay.portal.kernel.model.User getUser(
-		String cmicUUID) {
-
-		return getService().getUser(cmicUUID);
-	}
-
-	public static com.liferay.portal.kernel.json.JSONObject getUserDetails(
-			long groupId)
+	public static com.churchmutual.core.model.CMICUserDisplay getUserDetails()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getUserDetails(groupId);
+		return getService().getUserDetails();
+	}
+
+	public static com.churchmutual.core.model.CMICUserDisplay
+			getUserDetailsWithRoleAndStatus(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getUserDetailsWithRoleAndStatus(groupId);
 	}
 
 	public static void inviteBusinessMembers(

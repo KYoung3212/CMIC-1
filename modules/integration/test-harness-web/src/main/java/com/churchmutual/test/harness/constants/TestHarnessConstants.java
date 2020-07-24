@@ -17,7 +17,7 @@ public class TestHarnessConstants {
 
 	public static final String ENTRY_KEY_PRODUCER_SERVICE = "PRODUCER_SERVICE";
 
-	public static final String ENTRY_KEY_TRANSACTION_SERVICE = "TRANSACTION_SERVICE";
+	public static final String ENTRY_KEY_POLICY_SERVICE = "POLICY_SERVICE";
 
 	public static final String SCREEN_NAVIGATION_KEY = "TEST_HARNESS";
 

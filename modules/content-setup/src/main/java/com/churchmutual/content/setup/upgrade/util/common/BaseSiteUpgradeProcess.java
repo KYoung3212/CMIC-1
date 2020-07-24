@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.churchmutual.content.setup.upgrade.util.common;
 
 import com.churchmutual.commons.constants.LayoutURLKeyConstants;
@@ -24,6 +38,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -58,7 +73,8 @@ public abstract class BaseSiteUpgradeProcess extends BaseAdminUpgradeProcess {
 
 	public BaseSiteUpgradeProcess(
 		CompanyLocalService companyLocalService, DDMStructureLocalService ddmStructureLocalService,
-		DDMTemplateLocalService ddmTemplateLocalService, ExpandoColumnLocalService expandoColumnLocalService, ExpandoTableLocalService expandoTableLocalService, GroupLocalService groupLocalService,
+		DDMTemplateLocalService ddmTemplateLocalService, ExpandoColumnLocalService expandoColumnLocalService,
+		ExpandoTableLocalService expandoTableLocalService, GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService, LayoutSetLocalService layoutSetLocalService,
 		PermissionCheckerFactory permissionCheckerFactory, Portal portal, RoleLocalService roleLocalService,
 		UserLocalService userLocalService, VirtualHostLocalService virtualHostLocalService) {
@@ -80,14 +96,17 @@ public abstract class BaseSiteUpgradeProcess extends BaseAdminUpgradeProcess {
 	protected void addExpandoColumn(
 			long companyId, String className, String columnName, int dataType, UnicodeProperties properties)
 		throws PortalException {
+
 		ExpandoTable expandoTable = expandoTableLocalService.fetchTable(
 			companyId, portal.getClassNameId(className), ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		if (Validator.isNull(expandoTable)) {
-			expandoTable = expandoTableLocalService.addTable(companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		if (expandoTable == null) {
+			expandoTable = expandoTableLocalService.addTable(
+				companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
 
-		ExpandoColumn expandoColumn = expandoColumnLocalService.addColumn(expandoTable.getTableId(), columnName, dataType);
+		ExpandoColumn expandoColumn = expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), columnName, dataType);
 
 		expandoColumn.setTypeSettingsProperties(properties);
 
@@ -194,6 +213,29 @@ public abstract class BaseSiteUpgradeProcess extends BaseAdminUpgradeProcess {
 		layoutSetLocalService.updateLookAndFeel(groupId, false, insuredThemeId, StringPool.BLANK, StringPool.BLANK);
 
 		return groupId;
+	}
+
+	protected User addUser(
+			long companyId, long defaultUserId, long groupId, String emailAddress, String password, String firstName, String lastName, String externalReferenceCode)
+		throws PortalException {
+
+		if (Validator.isNull(emailAddress)) {
+			emailAddress = String.format("%s.%s@liferay.com", firstName, lastName);
+		}
+
+		long[] groupIds = new long[]{groupId};
+
+		User user = userLocalService.addUser(
+			defaultUserId, companyId, false, password, password, true, null, emailAddress, 0, null, LocaleUtil.getDefault(),
+			firstName, null, lastName, -1, -1, true, 1, 1, 1977, null, groupIds, null, null, null, false, null);
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			user.setExternalReferenceCode(externalReferenceCode);
+
+			userLocalService.updateUser(user);
+		}
+
+		return user;
 	}
 
 	protected ServiceContext getDefaultServiceContext(long companyId) throws PortalException {

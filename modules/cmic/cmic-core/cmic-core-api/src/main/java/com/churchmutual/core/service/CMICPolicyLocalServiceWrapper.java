@@ -43,6 +43,14 @@ public class CMICPolicyLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.churchmutual.core.model.CMICPolicyDisplay>
+			getPolicyDisplays(long cmicAccountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicPolicyLocalService.getPolicyDisplays(cmicAccountEntryId);
+	}
+
+	@Override
 	public CMICPolicyLocalService getWrappedService() {
 		return _cmicPolicyLocalService;
 	}

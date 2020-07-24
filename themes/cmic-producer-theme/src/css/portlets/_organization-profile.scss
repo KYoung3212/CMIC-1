@@ -36,6 +36,18 @@
 				left: -2rem;
 				transform: translateY(-50%);
 			}
-		}	
+		}
+
+		.empty-state {
+			max-width: none;
+
+			&::before {
+				content: none;
+			}
+
+			@include media-breakpoint-up(md) {
+				text-align: center;
+			}
+		}
 	}
 }

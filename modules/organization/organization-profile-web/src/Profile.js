@@ -47,91 +47,15 @@ class Profile extends React.Component {
   }
 
   getProducerOrgList() {
-    /*fetch(`/o/account/accounts/${this.userId}`)
-      .then(res => res.json())
-      .then(data => {
-        let accounts = data;
-        this.setState({producerOrgList: accounts, isLoading: false});
-      })
-      .catch(() => this.displayErrorMessage('error.unable-to-retrieve-list-of-accounts'))*/
+    let callback = (data) => this.setState({producerOrgList: data, isLoading: false});
 
-    this.setState({
-      producerOrgList: [
-        {
-        	producerName: 'Brown & Brown of SC',
-        	producerCode: '35-000',
-        	producerAddress: {
-        		streetNumber: '123',
-        		streetName: 'Main Street',
-        		city: 'Green Bay',
-        		state: 'WI',
-        		zipCode: '54229'
-        	},
-        	producerNumber: '123-456-7890'
-        },
-        {
-        	producerName: 'XYZ Insurance',
-        	producerCode: '35-001',
-        	producerAddress: {
-        		streetNumber: '4434',
-        		streetName: 'Cheese Dr',
-        		city: 'Green Bay',
-        		state: 'WI',
-        		zipCode: '54220'
-        	},
-        	producerNumber: '987-456-3241'
-        },
-        {
-        	producerName: 'Wisconsin Mutual',
-        	producerCode: '35-002',
-        	producerAddress: {
-        		streetNumber: '4434',
-        		streetName: 'Cheese Dr',
-        		city: 'Green Bay',
-        		state: 'WI',
-        		zipCode: '54220'
-        	},
-        	producerNumber: '987-456-3241'
-        },
-        {
-        	producerName: 'Brown & Brown of SC',
-        	producerCode: '35-000',
-        	producerAddress: {
-        		streetNumber: '123',
-        		streetName: 'Main Street',
-        		city: 'Green Bay',
-        		state: 'WI',
-        		zipCode: '54229'
-        	},
-        	producerNumber: '123-456-7890'
-        },
-        {
-        	producerName: 'XYZ Insurance',
-        	producerCode: '35-001',
-        	producerAddress: {
-        		streetNumber: '4434',
-        		streetName: 'Cheese Dr',
-        		city: 'Green Bay',
-        		state: 'WI',
-        		zipCode: '54220'
-        	},
-        	producerNumber: '987-456-3241'
-        },
-        {
-        	producerName: 'Wisconsin Mutual',
-        	producerCode: '35-002',
-        	producerAddress: {
-        		streetNumber: '4434',
-        		streetName: 'Cheese Dr',
-        		city: 'Green Bay',
-        		state: 'WI',
-        		zipCode: '54220'
-        	},
-        	producerNumber: '987-456-3241'
-        }
-      ],
-      isLoading: false
-    });
+    let errCallback = () => this.displayErrorMessage('error.unable-to-retrieve-producer-organizations');
+
+    Liferay.Service(
+      '/cmic.cmicorganization/get-cmic-organization-displays',
+      callback,
+      errCallback
+    );
   }
 
   render() {

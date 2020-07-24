@@ -1,14 +1,24 @@
 package com.churchmutual.rest.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.math.BigDecimal;
 
 /**
  * @author Kayleen Lim
  */
-public class CMICTransactionAccountSummaryDTO extends CMICObjectDTO {
+public class CMICPolicyAccountSummaryDTO extends CMICObjectDTO {
 
 	public String getAccountNumber() {
 		return _accountNumber;
+	}
+
+	public String getCompanyNumber() {
+		if (Validator.isBlank(_companyNumber)) {
+			return DEFAULT_COMPANY_NUMBER;
+		}
+
+		return _companyNumber;
 	}
 
 	public int getNumExpiredPolicies() {
@@ -27,12 +37,12 @@ public class CMICTransactionAccountSummaryDTO extends CMICObjectDTO {
 		return _totalBilledPremium;
 	}
 
-	public void set_totalBilledPremium(BigDecimal totalBilledPremium) {
-		_totalBilledPremium = totalBilledPremium;
-	}
-
 	public void setAccountNumber(String accountNumber) {
 		_accountNumber = accountNumber;
+	}
+
+	public void setCompanyNumber(String companyNumber) {
+		_companyNumber = companyNumber;
 	}
 
 	public void setNumExpiredPolicies(int numExpiredPolicies) {
@@ -47,7 +57,12 @@ public class CMICTransactionAccountSummaryDTO extends CMICObjectDTO {
 		_numInForcePolicies = numInForcePolicies;
 	}
 
+	public void setTotalBilledPremium(BigDecimal totalBilledPremium) {
+		_totalBilledPremium = totalBilledPremium;
+	}
+
 	private String _accountNumber;
+	private String _companyNumber;
 	private int _numExpiredPolicies;
 	private int _numFuturePolicies;
 	private int _numInForcePolicies;

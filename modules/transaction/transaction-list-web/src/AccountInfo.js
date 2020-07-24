@@ -36,7 +36,7 @@ const AccountInfo = (props) => {
         />
       </div>
       <div className="well">
-        <h6 className="well-title">{Liferay.Language.get('producer-entity')}</h6>
+        <h6 className="well-title">{Liferay.Language.get('producer-org')}</h6>
         <div className="well-subtitle">{props.transaction.producerEntity}</div>
         <div className="small font-weight-bold text-muted">{props.transaction.producerEntityCode}</div>
       </div>

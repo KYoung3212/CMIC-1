@@ -47,6 +47,15 @@ public class CMICOrganizationLocalServiceWrapper
 			cmicOrganization);
 	}
 
+	@Override
+	public com.churchmutual.core.model.CMICOrganization addCMICOrganization(
+			long userId, long producerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicOrganizationLocalService.addCMICOrganization(
+			userId, producerId);
+	}
+
 	/**
 	 * Creates a new cmic organization with the primary key. Does not add the cmic organization to the database.
 	 *
@@ -203,6 +212,23 @@ public class CMICOrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public com.churchmutual.core.model.CMICOrganization
+		fetchCMICOrganizationByOrganizationId(long organizationId) {
+
+		return _cmicOrganizationLocalService.
+			fetchCMICOrganizationByOrganizationId(organizationId);
+	}
+
+	@Override
+	public com.churchmutual.core.model.CMICOrganization
+			fetchCMICOrganizationByProducerId(long producerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicOrganizationLocalService.fetchCMICOrganizationByProducerId(
+			producerId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -226,11 +252,12 @@ public class CMICOrganizationLocalServiceWrapper
 	}
 
 	@Override
-	public com.churchmutual.core.model.CMICOrganization
-		getCMICOrganizationByOrganizationId(long organizationId) {
+	public java.util.List<com.churchmutual.core.model.CMICOrganizationDisplay>
+			getCMICOrganizationDisplays(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cmicOrganizationLocalService.
-			getCMICOrganizationByOrganizationId(organizationId);
+		return _cmicOrganizationLocalService.getCMICOrganizationDisplays(
+			userId);
 	}
 
 	/**
@@ -251,6 +278,14 @@ public class CMICOrganizationLocalServiceWrapper
 		return _cmicOrganizationLocalService.getCMICOrganizations(start, end);
 	}
 
+	@Override
+	public java.util.List<com.churchmutual.core.model.CMICOrganization>
+		getCMICOrganizationsByUserId(long userId) {
+
+		return _cmicOrganizationLocalService.getCMICOrganizationsByUserId(
+			userId);
+	}
+
 	/**
 	 * Returns the number of cmic organizations.
 	 *
@@ -259,14 +294,6 @@ public class CMICOrganizationLocalServiceWrapper
 	@Override
 	public int getCMICOrganizationsCount() {
 		return _cmicOrganizationLocalService.getCMICOrganizationsCount();
-	}
-
-	@Override
-	public java.util.List<com.churchmutual.core.model.CMICOrganization>
-			getCMICUserOrganizations(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cmicOrganizationLocalService.getCMICUserOrganizations(userId);
 	}
 
 	@Override
@@ -307,6 +334,15 @@ public class CMICOrganizationLocalServiceWrapper
 
 		return _cmicOrganizationLocalService.updateCMICOrganization(
 			cmicOrganization);
+	}
+
+	@Override
+	public com.churchmutual.core.model.CMICOrganization
+			updateCMICOrganizationContactInfo(long userId, long producerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicOrganizationLocalService.updateCMICOrganizationContactInfo(
+			userId, producerId);
 	}
 
 	@Override

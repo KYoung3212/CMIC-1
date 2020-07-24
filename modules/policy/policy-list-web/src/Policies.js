@@ -50,29 +50,79 @@ class Policies extends React.Component {
   }
 
   getAccount() {
-    /*fetch(`/o/account/accounts/${this.userId}`)
-      .then(res => res.json())
-      .then(data => {
-        let accounts = data;
-        this.setState({accountsList: accounts, isLoading: false});
-      })
-      .catch(() => this.displayErrorMessage('error.unable-to-retrieve-list-of-accounts'))*/
+    let cmicAccountEntryId = this.getCMICAccountEntryId()
 
-    this.setState({
-      account: {
-        accountName: 'First Baptist Green Bay',
-        accountNumber: '1AJNS1981',
-        producerEntity: 'XYZ Insurance',
-        producerEntityCode: '35-001',
-        policyList: [
-          { policyName: 'Commercial Auto', policyNumber: '1AJNS1981', startDate: '1/1/20', endDate: '1/1/21', transactions: 7, amountBilled: 54428.21 },
-          { policyName: 'General Liability', policyNumber: '9811ANS1J', startDate: '1/1/20', endDate: '1/1/21', transactions: 1, amountBilled: 27594.21 },
-          { policyName: 'International Travel', policyNumber: '8BCU91982', startDate: '1/1/20', endDate: '1/1/21', transactions: 14, amountBilled: 16750.21 },
-          { policyName: 'Multi-Peril', policyNumber: '44SD1NZC34', startDate: '1/1/19', endDate: '1/1/20', transactions: 35, amountBilled: 2460.21 }
-        ]
+    if (cmicAccountEntryId == null) {
+      this.setState({isLoading: false});
+
+      return;
+    }
+
+    let errCallback = () => this.displayErrorMessage('error.unable-to-retrieve-list-of-policies')
+
+    let accountCallback = (account) => {
+      this.setState({
+        account: {
+          accountName: account.accountName,
+          accountNumber: account.accountNumber,
+          companyNumber: account.companyNumber,
+          producerEntity: account.producerName,
+          producerEntityCode: account.producerCode
+        }
+      });
+
+      this.getPolicies()
+    }
+
+    Liferay.Service(
+      '/cmic.cmicaccountentry/get-cmic-account-entry-display',
+      {
+        cmicAccountEntryId: cmicAccountEntryId
       },
-      isLoading: false
-    });
+      accountCallback,
+      errCallback
+    );
+  }
+
+  getCMICAccountEntryId() {
+    let urlSearchParameters = new URLSearchParams(window.location.search);
+
+    return urlSearchParameters.get('cmicAccountEntryId');
+  }
+
+  getPolicies() {
+    let errCallback = () => this.displayErrorMessage('error.unable-to-retrieve-list-of-policies')
+
+    let policyListCallback = (policies) => {
+      this.setState((prevState) => ({
+        account: {
+          ...prevState.account,
+          policyList: policies
+        },
+        isLoading: false
+      }));
+
+      this.addRecentlyViewedCMICAccountEntryId();
+    }
+
+    Liferay.Service(
+      '/cmic.cmicpolicy/get-policy-displays',
+      {
+        cmicAccountEntryId: this.getCMICAccountEntryId()
+      },
+      policyListCallback,
+      errCallback
+    );
+  }
+
+  addRecentlyViewedCMICAccountEntryId() {
+    Liferay.Service(
+      '/cmic.cmicuser/add-recently-viewed-cmic-account-entry-id',
+      {
+        cmicAccountEntryId: this.getCMICAccountEntryId()
+      }
+    );
+
   }
 
   render() {

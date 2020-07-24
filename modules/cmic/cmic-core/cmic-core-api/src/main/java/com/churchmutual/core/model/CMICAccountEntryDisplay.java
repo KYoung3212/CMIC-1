@@ -1,96 +1,107 @@
 package com.churchmutual.core.model;
 
+import com.churchmutual.core.service.CMICAccountEntryLocalServiceUtil;
+
+import com.churchmutual.core.service.CMICPolicyLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CMICAccountEntryDisplay {
 
-	public long getCmicAccountEntryId() {
-		return _cmicAccountEntryId;
-	}
+	public CMICAccountEntryDisplay(CMICAccountEntry cmicAccountEntry) {
+		_accountEntryId = cmicAccountEntry.getAccountEntryId();
+		_accountNumber = cmicAccountEntry.getAccountNumber();
+		_cmicAccountEntryId = cmicAccountEntry.getCmicAccountEntryId();
+		_companyNumber = cmicAccountEntry.getCompanyNumber();
+		_numExpiredPolicies = cmicAccountEntry.getNumExpiredPolicies();
+		_numFuturePolicies = cmicAccountEntry.getNumFuturePolicies();
+		_numInForcePolicies = cmicAccountEntry.getNumInForcePolicies();
+		_totalBilledPremium = cmicAccountEntry.getTotalBilledPremium();
 
-	public void setCmicAccountEntryId(long cmicAccountEntryId) {
-		_cmicAccountEntryId = cmicAccountEntryId;
+		try {
+			_accountName = CMICAccountEntryLocalServiceUtil.getAccountEntryName(cmicAccountEntry);
+
+			List<CMICPolicyDisplay> cmicPolicyDisplays = CMICPolicyLocalServiceUtil.getPolicyDisplays(cmicAccountEntry.getCmicAccountEntryId());
+
+			List<String> policyNumbers = cmicPolicyDisplays.stream().map(cmicPolicyDisplay -> cmicPolicyDisplay.getPolicyNumber()).collect(Collectors.toList());
+
+			_policyNumbers = StringUtil.merge(policyNumbers, StringPool.COMMA);
+
+			_producerCode = CMICAccountEntryLocalServiceUtil.getProducerCode(cmicAccountEntry);
+			_producerName = CMICAccountEntryLocalServiceUtil.getOrganizationName(cmicAccountEntry);
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+		}
 	}
 
 	public long getAccountEntryId() {
 		return _accountEntryId;
 	}
 
-	public void setAccountEntryId(long accountEntryId) {
-		_accountEntryId = accountEntryId;
+	public String getAccountName() {
+		return _accountName;
 	}
 
 	public String getAccountNumber() {
 		return _accountNumber;
 	}
 
-	public void setAccountNumber(String accountNumber) {
-		_accountNumber = accountNumber;
+	public long getCmicAccountEntryId() {
+		return _cmicAccountEntryId;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
+	public String getCompanyNumber() {
+		return _companyNumber;
 	}
 
 	public int getNumExpiredPolicies() {
 		return _numExpiredPolicies;
 	}
 
-	public void setNumExpiredPolicies(int numExpiredPolicies) {
-		_numExpiredPolicies = numExpiredPolicies;
-	}
-
 	public int getNumFuturePolicies() {
 		return _numFuturePolicies;
-	}
-
-	public void setNumFuturePolicies(int numFuturePolicies) {
-		_numFuturePolicies = numFuturePolicies;
 	}
 
 	public int getNumInForcePolicies() {
 		return _numInForcePolicies;
 	}
 
-	public void setNumInForcePolicies(int numInForcePolicies) {
-		_numInForcePolicies = numInForcePolicies;
+	public String getPolicyNumbers() {
+		return _policyNumbers;
 	}
 
-	public long getProducerId() {
-		return _producerId;
-	}
-
-	public void setProducerId(long producerId) {
-		_producerId = producerId;
+	public String getProducerCode() {
+		return _producerCode;
 	}
 
 	public String getProducerName() {
 		return _producerName;
 	}
 
-	public void setProducerName(String producerName) {
-		_producerName = producerName;
-	}
-
 	public String getTotalBilledPremium() {
 		return _totalBilledPremium;
 	}
 
-	public void setTotalBilledPremium(String totalBilledPremium) {
-		_totalBilledPremium = totalBilledPremium;
-	}
+	private static Log _log = LogFactoryUtil.getLog(CMICAccountEntryDisplay.class);
 
-	private long _cmicAccountEntryId;
 	private long _accountEntryId;
+	private String _accountName;
 	private String _accountNumber;
-	private String _name;
+	private long _cmicAccountEntryId;
+	private String _companyNumber;
 	private int _numExpiredPolicies;
 	private int _numFuturePolicies;
 	private int _numInForcePolicies;
+	private String _policyNumbers;
+	private String _producerCode;
 	private String _producerName;
-	private long _producerId;
 	private String _totalBilledPremium;
 
 }

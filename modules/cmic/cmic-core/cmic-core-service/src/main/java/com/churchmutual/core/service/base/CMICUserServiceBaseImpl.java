@@ -15,6 +15,7 @@
 package com.churchmutual.core.service.base;
 
 import com.churchmutual.core.service.CMICUserService;
+import com.churchmutual.core.service.persistence.CMICAccountEntryFinder;
 import com.churchmutual.core.service.persistence.CMICAccountEntryPersistence;
 import com.churchmutual.core.service.persistence.CMICOrganizationPersistence;
 
@@ -103,6 +104,9 @@ public abstract class CMICUserServiceBaseImpl
 	protected CMICAccountEntryPersistence cmicAccountEntryPersistence;
 
 	@Reference
+	protected CMICAccountEntryFinder cmicAccountEntryFinder;
+
+	@Reference
 	protected CMICOrganizationPersistence cmicOrganizationPersistence;
 
 	@Reference
@@ -124,8 +128,30 @@ public abstract class CMICUserServiceBaseImpl
 		classNameService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.GroupLocalService
+		groupLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.GroupService groupService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationService
+		organizationService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.RoleLocalService
+		roleLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.RoleService roleService;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
@@ -133,5 +159,21 @@ public abstract class CMICUserServiceBaseImpl
 
 	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserGroupLocalService
+		userGroupLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserGroupService
+		userGroupService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserGroupRoleLocalService
+		userGroupRoleLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserGroupRoleService
+		userGroupRoleService;
 
 }

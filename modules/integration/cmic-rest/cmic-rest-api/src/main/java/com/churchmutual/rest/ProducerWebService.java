@@ -15,9 +15,11 @@ public interface ProducerWebService {
 
 	public List<CMICContactDTO> getContacts(long producerId) throws PortalException;
 
+	public CMICContactDTO getPrimaryContact(long producerId) throws PortalException;
+
 	public CMICProducerDTO getProducerById(long id) throws PortalException;
 
-	public List<CMICProducerDTO> getProducers(String agent, String division, String name, boolean payOutOfCdms)
+	public List<CMICProducerDTO> getProducers(String agent, String division, String name, Boolean payOutOfCdms)
 		throws PortalException;
 
 	/**

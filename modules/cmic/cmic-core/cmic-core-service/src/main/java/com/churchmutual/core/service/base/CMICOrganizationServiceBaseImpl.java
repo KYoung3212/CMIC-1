@@ -16,6 +16,7 @@ package com.churchmutual.core.service.base;
 
 import com.churchmutual.core.model.CMICOrganization;
 import com.churchmutual.core.service.CMICOrganizationService;
+import com.churchmutual.core.service.persistence.CMICAccountEntryFinder;
 import com.churchmutual.core.service.persistence.CMICAccountEntryPersistence;
 import com.churchmutual.core.service.persistence.CMICOrganizationPersistence;
 
@@ -111,6 +112,9 @@ public abstract class CMICOrganizationServiceBaseImpl
 	protected CMICAccountEntryPersistence cmicAccountEntryPersistence;
 
 	@Reference
+	protected CMICAccountEntryFinder cmicAccountEntryFinder;
+
+	@Reference
 	protected com.churchmutual.core.service.CMICOrganizationLocalService
 		cmicOrganizationLocalService;
 
@@ -124,12 +128,41 @@ public abstract class CMICOrganizationServiceBaseImpl
 		counterLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.AddressLocalService
+		addressLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.AddressService addressService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameService
 		classNameService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.ListTypeLocalService
+		listTypeLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.ListTypeService listTypeService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationLocalService
+		organizationLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.OrganizationService
+		organizationService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.PhoneLocalService
+		phoneLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.PhoneService phoneService;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService

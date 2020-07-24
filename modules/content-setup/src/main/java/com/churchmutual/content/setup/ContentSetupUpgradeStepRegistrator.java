@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.churchmutual.content.setup;
 
 import com.churchmutual.content.setup.upgrade.util.v1_0_0.AddBrokerSiteUpgradeProcess;
@@ -10,6 +24,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -34,9 +49,9 @@ public class ContentSetupUpgradeStepRegistrator implements UpgradeStepRegistrato
 		registry.register(
 			"0.0.0", "1.0.0",
 			new AddBrokerSiteUpgradeProcess(
-				companyLocalService, ddmStructureLocalService, ddmTemplateLocalService, expandoColumnLocalService, expandoTableLocalService, groupLocalService,
-				journalArticleLocalService, layoutSetLocalService, permissionCheckerFactory, portal, roleLocalService,
-				userLocalService, virtualHostLocalService),
+				companyLocalService, ddmStructureLocalService, ddmTemplateLocalService, expandoColumnLocalService,
+				expandoTableLocalService, groupLocalService, journalArticleLocalService, layoutSetLocalService,
+				permissionCheckerFactory, portal, roleLocalService, userLocalService, virtualHostLocalService),
 			new AddRolesUpgradeProcess());
 	}
 
@@ -71,10 +86,10 @@ public class ContentSetupUpgradeStepRegistrator implements UpgradeStepRegistrato
 	protected DDMTemplateLocalService ddmTemplateLocalService;
 
 	@Reference
-	protected ExpandoTableLocalService expandoTableLocalService;
+	protected ExpandoColumnLocalService expandoColumnLocalService;
 
 	@Reference
-	protected ExpandoColumnLocalService expandoColumnLocalService;
+	protected ExpandoTableLocalService expandoTableLocalService;
 
 	@Reference
 	protected GroupLocalService groupLocalService;
@@ -107,6 +122,12 @@ public class ContentSetupUpgradeStepRegistrator implements UpgradeStepRegistrato
 
 	@Reference(target = "(javax.portlet.name=com_churchmutual_profile_web_portlet_ProfileWebPortlet)")
 	protected Portlet profileWebPortlet;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.adaptive.media.document.library.thumbnails)(release.schema.version>=1.0.1))",
+		unbind = "-"
+	)
+	protected Release release;
 
 	@Reference
 	protected RoleLocalService roleLocalService;

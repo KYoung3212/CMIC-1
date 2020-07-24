@@ -1,0 +1,20 @@
+<custom-sql>
+	<sql id="com.churchmutual.core.service.persistence.CMICAccountEntryFinder.getCMICAccountEntriesByUserIdOrderedByName">
+		<![CDATA[
+			SELECT
+				{cmic_CMICAccountEntry.*}
+			FROM
+				cmic_CMICAccountEntry
+			INNER JOIN
+				AccountEntry ON
+					cmic_CMICAccountEntry.accountEntryId = AccountEntry.accountEntryId
+			INNER JOIN
+				AccountEntryUserRel ON
+					AccountEntry.accountEntryId = AccountEntryUserRel.accountEntryId
+			WHERE
+				AccountEntryUserRel.accountUserId = [$USER_ID$]
+			ORDER BY
+				AccountEntry.name ASC
+		]]>
+	</sql>
+</custom-sql>

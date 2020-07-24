@@ -10,8 +10,8 @@
 		"@babel/preset-react": "^7.9.4",
 		"copy-webpack-plugin": "4.6.0",
 		"jest": "^26.0.1",
-		"liferay-npm-build-support": "^2.18.2",
-		"liferay-npm-bundler": "^2.18.2",
+		"liferay-npm-build-support": "^2.18.8",
+		"liferay-npm-bundler": "^2.18.8",
 		"webpack": "4.29.6",
 		"webpack-cli": "3.3.0",
 		"webpack-dev-server": "3.2.1"

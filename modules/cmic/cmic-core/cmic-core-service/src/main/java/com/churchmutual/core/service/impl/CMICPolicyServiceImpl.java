@@ -14,11 +14,15 @@
 
 package com.churchmutual.core.service.impl;
 
+import com.churchmutual.core.model.CMICPolicyDisplay;
 import com.churchmutual.core.service.base.CMICPolicyServiceBaseImpl;
 
 import com.liferay.portal.aop.AopService;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import org.osgi.service.component.annotations.Component;
+
+import java.util.List;
 
 /**
  * The implementation of the cmic policy remote service.
@@ -39,10 +43,9 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CMICPolicyServiceImpl extends CMICPolicyServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.churchmutual.core.service.CMICPolicyServiceUtil</code> to access the cmic policy remote service.
-	 */
+	@Override
+	public List<CMICPolicyDisplay> getPolicyDisplays(long cmicAccountEntryId) throws PortalException {
+		return cmicPolicyLocalService.getPolicyDisplays(cmicAccountEntryId);
+	}
 
 }

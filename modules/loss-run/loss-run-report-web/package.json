@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"description": "CMIC Loss Run Report Web",
 	"devDependencies": {
-		"liferay-npm-bundler": "^2.18.5",
-		"liferay-npm-build-support": "^2.18.5",
+		"liferay-npm-bundler": "^2.18.8",
+		"liferay-npm-build-support": "^2.18.8",
 		"copy-webpack-plugin": "4.6.0",
 		"webpack": "4.29.6",
 		"webpack-cli": "3.3.0",

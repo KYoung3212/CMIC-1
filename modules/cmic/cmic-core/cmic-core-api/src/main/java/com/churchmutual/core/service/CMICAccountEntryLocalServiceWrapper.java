@@ -48,6 +48,23 @@ public class CMICAccountEntryLocalServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>CMICAccountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CMICAccountEntryLocalServiceUtil</code>.
+	 */
+	@Override
+	public com.churchmutual.core.model.CMICAccountEntry
+			addOrUpdateCMICAccountEntry(
+				long userId, String accountNumber, String companyNumber,
+				String accountName, long producerId, String producerCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryLocalService.addOrUpdateCMICAccountEntry(
+			userId, accountNumber, companyNumber, accountName, producerId,
+			producerCode);
+	}
+
+	/**
 	 * Creates a new cmic account entry with the primary key. Does not add the cmic account entry to the database.
 	 *
 	 * @param cmicAccountEntryId the primary key for the new cmic account entry
@@ -203,6 +220,23 @@ public class CMICAccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.churchmutual.core.model.CMICAccountEntry fetchCMICAccountEntry(
+		String accountNumber, String companyNumber) {
+
+		return _cmicAccountEntryLocalService.fetchCMICAccountEntry(
+			accountNumber, companyNumber);
+	}
+
+	@Override
+	public String getAccountEntryName(
+			com.churchmutual.core.model.CMICAccountEntry cmicAccountEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryLocalService.getAccountEntryName(
+			cmicAccountEntry);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -225,6 +259,23 @@ public class CMICAccountEntryLocalServiceWrapper
 		getCMICAccountEntries(int start, int end) {
 
 		return _cmicAccountEntryLocalService.getCMICAccountEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.churchmutual.core.model.CMICAccountEntry>
+		getCMICAccountEntriesByUserId(long userId) {
+
+		return _cmicAccountEntryLocalService.getCMICAccountEntriesByUserId(
+			userId);
+	}
+
+	@Override
+	public java.util.List<com.churchmutual.core.model.CMICAccountEntry>
+		getCMICAccountEntriesByUserIdOrderedByName(
+			long userId, int start, int end) {
+
+		return _cmicAccountEntryLocalService.
+			getCMICAccountEntriesByUserIdOrderedByName(userId, start, end);
 	}
 
 	/**
@@ -254,11 +305,55 @@ public class CMICAccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.churchmutual.core.model.CMICAccountEntry getCMICAccountEntry(
+			String accountNumber, String companyNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryLocalService.getCMICAccountEntry(
+			accountNumber, companyNumber);
+	}
+
+	@Override
+	public com.churchmutual.core.model.CMICAccountEntryDisplay
+			getCMICAccountEntryDisplay(String cmicAccountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryLocalService.getCMICAccountEntryDisplay(
+			cmicAccountEntryId);
+	}
+
+	@Override
+	public java.util.List<com.churchmutual.core.model.CMICAccountEntryDisplay>
+		getCMICAccountEntryDisplays(
+			java.util.List<String> cmicAccountEntryIds) {
+
+		return _cmicAccountEntryLocalService.getCMICAccountEntryDisplays(
+			cmicAccountEntryIds);
+	}
+
+	@Override
+	public java.util.List<com.churchmutual.core.model.CMICAccountEntryDisplay>
+		getCMICAccountEntryDisplays(long userId) {
+
+		return _cmicAccountEntryLocalService.getCMICAccountEntryDisplays(
+			userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
 		return _cmicAccountEntryLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public String getOrganizationName(
+			com.churchmutual.core.model.CMICAccountEntry cmicAccountEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryLocalService.getOrganizationName(
+			cmicAccountEntry);
 	}
 
 	/**
@@ -279,6 +374,14 @@ public class CMICAccountEntryLocalServiceWrapper
 		return _cmicAccountEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public String getProducerCode(
+			com.churchmutual.core.model.CMICAccountEntry cmicAccountEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cmicAccountEntryLocalService.getProducerCode(cmicAccountEntry);
+	}
+
 	/**
 	 * Updates the cmic account entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -291,6 +394,16 @@ public class CMICAccountEntryLocalServiceWrapper
 
 		return _cmicAccountEntryLocalService.updateCMICAccountEntry(
 			cmicAccountEntry);
+	}
+
+	@Override
+	public void updateCMICAccountEntryDetails(
+			java.util.List<com.churchmutual.core.model.CMICAccountEntry>
+				cmicAccountEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cmicAccountEntryLocalService.updateCMICAccountEntryDetails(
+			cmicAccountEntries);
 	}
 
 	@Override

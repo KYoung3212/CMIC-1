@@ -150,14 +150,17 @@ public class CMICUserServiceSoap {
 		}
 	}
 
-	public static String getGroupOtherUsers(long groupId)
+	public static com.churchmutual.core.model.CMICUserDisplay[]
+			getGroupOtherUsers(long groupId)
 		throws RemoteException {
 
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue =
-				CMICUserServiceUtil.getGroupOtherUsers(groupId);
+			java.util.List<com.churchmutual.core.model.CMICUserDisplay>
+				returnValue = CMICUserServiceUtil.getGroupOtherUsers(groupId);
 
-			return returnValue.toString();
+			return returnValue.toArray(
+				new com.churchmutual.core.model.CMICUserDisplay
+					[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -179,14 +182,19 @@ public class CMICUserServiceSoap {
 		}
 	}
 
-	public static String[] getRecentlyViewedAccountNumbers()
+	public static com.churchmutual.core.model.CMICAccountEntryDisplay[]
+			getRecentlyViewedCMICAccountEntryDisplays()
 		throws RemoteException {
 
 		try {
-			java.util.List<String> returnValue =
-				CMICUserServiceUtil.getRecentlyViewedAccountNumbers();
+			java.util.List<com.churchmutual.core.model.CMICAccountEntryDisplay>
+				returnValue =
+					CMICUserServiceUtil.
+						getRecentlyViewedCMICAccountEntryDisplays();
 
-			return returnValue.toArray(new String[returnValue.size()]);
+			return returnValue.toArray(
+				new com.churchmutual.core.model.CMICAccountEntryDisplay
+					[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -195,12 +203,12 @@ public class CMICUserServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.User getUser(String cmicUUID)
+	public static com.churchmutual.core.model.CMICUserDisplay getUserDetails()
 		throws RemoteException {
 
 		try {
-			com.liferay.portal.kernel.model.User returnValue =
-				CMICUserServiceUtil.getUser(cmicUUID);
+			com.churchmutual.core.model.CMICUserDisplay returnValue =
+				CMICUserServiceUtil.getUserDetails();
 
 			return returnValue;
 		}
@@ -211,12 +219,15 @@ public class CMICUserServiceSoap {
 		}
 	}
 
-	public static String getUserDetails(long groupId) throws RemoteException {
-		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue =
-				CMICUserServiceUtil.getUserDetails(groupId);
+	public static com.churchmutual.core.model.CMICUserDisplay
+			getUserDetailsWithRoleAndStatus(long groupId)
+		throws RemoteException {
 
-			return returnValue.toString();
+		try {
+			com.churchmutual.core.model.CMICUserDisplay returnValue =
+				CMICUserServiceUtil.getUserDetailsWithRoleAndStatus(groupId);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

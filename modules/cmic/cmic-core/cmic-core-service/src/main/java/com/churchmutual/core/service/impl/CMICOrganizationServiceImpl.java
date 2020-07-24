@@ -15,10 +15,13 @@
 package com.churchmutual.core.service.impl;
 
 import com.churchmutual.core.model.CMICOrganization;
+import com.churchmutual.core.model.CMICOrganizationDisplay;
 import com.churchmutual.core.service.base.CMICOrganizationServiceBaseImpl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,8 +45,13 @@ import org.osgi.service.component.annotations.Component;
 public class CMICOrganizationServiceImpl extends CMICOrganizationServiceBaseImpl {
 
 	@Override
-	public CMICOrganization getCMICOrganizationByOrganizationId(long organizationId) throws PortalException {
-		return cmicOrganizationLocalService.getCMICOrganizationByOrganizationId(organizationId);
+	public CMICOrganization fetchCMICOrganizationByOrganizationId(long organizationId) throws PortalException {
+		return cmicOrganizationLocalService.fetchCMICOrganizationByOrganizationId(organizationId);
+	}
+
+	@Override
+	public List<CMICOrganizationDisplay> getCMICOrganizationDisplays() throws PortalException {
+		return cmicOrganizationLocalService.getCMICOrganizationDisplays(getUserId());
 	}
 
 }

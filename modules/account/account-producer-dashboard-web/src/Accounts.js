@@ -45,24 +45,15 @@ class Accounts extends React.Component {
   }
 
   getAccountsList() {
-    /*fetch(`/o/account/accounts/${this.userId}`)
-      .then(res => res.json())
-      .then(data => {
-        let accounts = data;
-        this.setState({accountsList: accounts, isLoading: false});
-      })
-      .catch(() => this.displayErrorMessage('error.unable-to-retrieve-list-of-accounts'))*/
+    let callback = (data) => this.setState({accountsList: data, isLoading: false});
 
-    this.setState({
-      accountsList: [
-        { accountName: 'First Baptist Green Bay', accountNumber: '1AJNS1981', inForcePolicies: 24, amountBilled: 54428.21 },
-        { accountName: 'Merrill School District', accountNumber: '1AJNS1981', inForcePolicies: 14, amountBilled: 27594.21 },
-        { accountName: 'Lucy’s Daycare', accountNumber: '1AJNS1981', inForcePolicies: 17, amountBilled: 16750.21 },
-        { accountName: 'St. John’s Cathedral', accountNumber: '1AJNS1981', inForcePolicies: 32, amountBilled: 83300.21 },
-        { accountName: 'Trinity United Methodist', accountNumber: '1AJNS1981', inForcePolicies: 23, amountBilled: 2460.21 }
-      ],
-      isLoading: false
-    });
+    let errCallback = () => this.displayErrorMessage('error.unable-to-retrieve-list-of-accounts');
+
+    Liferay.Service(
+      '/cmic.cmicuser/get-recently-viewed-cmic-account-entry-displays',
+      callback,
+      errCallback
+    );
   }
 
   render() {

@@ -15,12 +15,12 @@
 package com.churchmutual.core.service;
 
 import com.churchmutual.commons.enums.BusinessPortalType;
-import com.churchmutual.rest.model.CMICUserDTO;
+import com.churchmutual.core.model.CMICAccountEntryDisplay;
+import com.churchmutual.core.model.CMICUserDisplay;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -59,6 +59,10 @@ public interface CMICUserLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public User fetchUserByCmicUUID(long companyId, String cmicUUID)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getBusinesses(long userId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -77,7 +81,7 @@ public interface CMICUserLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray getGroupOtherUsers(long userId, long groupId)
+	public List<CMICUserDisplay> getGroupOtherUsers(long userId, long groupId)
 		throws PortalException;
 
 	/**
@@ -91,14 +95,16 @@ public interface CMICUserLocalService extends BaseLocalService {
 	public String getPortraitImageURL(long userId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<String> getRecentlyViewedCMICAccountEntryIds(long userId)
+	public List<CMICAccountEntryDisplay>
+			getRecentlyViewedCMICAccountEntryDisplays(long userId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUser(String cmicUUID);
+	public CMICUserDisplay getUserDetails(long userId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getUserDetails(long userId, long groupId)
+	public CMICUserDisplay getUserDetailsWithRoleAndStatus(
+			long userId, long groupId)
 		throws PortalException;
 
 	public void inviteBusinessMembers(
@@ -123,9 +129,6 @@ public interface CMICUserLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public String updatePortraitImage(long userId, String imageFileString)
-		throws PortalException;
-
-	public void updateUserAndGroups(CMICUserDTO cmicUserDTO)
 		throws PortalException;
 
 	public void validateUserRegistration(String registrationCode)

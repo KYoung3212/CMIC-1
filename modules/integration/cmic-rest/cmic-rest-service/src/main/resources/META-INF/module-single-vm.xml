@@ -38,7 +38,21 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="1000"
-		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_TRANSACTION_ACCOUNT_SUMMARY_BY_ACCOUNTS"
+		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_POLICIES_BY_POLICY_NUMBERS"
+		overflowToDisk="false"
+		timeToIdleSeconds="60"
+	/>
+	<cache
+		eternal="false"
+		maxElementsInMemory="1000"
+		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_POLICIES_ON_ACCOUNT"
+		overflowToDisk="false"
+		timeToIdleSeconds="60"
+	/>
+	<cache
+		eternal="false"
+		maxElementsInMemory="1000"
+		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_POLICY_ACCOUNT_SUMMARIES_BY_ACCOUNTS"
 		overflowToDisk="false"
 		timeToIdleSeconds="60"
 	/>
@@ -52,23 +66,8 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="1000"
-		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_TRANSACTION_ON_POLICY"
+		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_TRANSACTIONS_ON_POLICY"
 		overflowToDisk="false"
 		timeToIdleSeconds="60"
 	/>
-	<cache
-		eternal="false"
-		maxElementsInMemory="1000"
-		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_TRANSACTION_POLICY_SUMMARY_BY_POLICIES"
-		overflowToDisk="false"
-		timeToIdleSeconds="60"
-	/>
-	<cache
-		eternal="false"
-		maxElementsInMemory="1000"
-		name="com.churchmutual.rest.service.TransactionWebServiceImpl_GET_TRANSACTION_POLICY_SUMMARY_ON_ACCOUNT"
-		overflowToDisk="false"
-		timeToIdleSeconds="60"
-	/>
-
 </ehcache>

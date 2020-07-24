@@ -64,7 +64,7 @@ $link-action: map-merge((
 	font-size: .815rem,
 	font-weight: 900,
 	letter-spacing: .065rem,
-	focus-box-shadow: none
+	focus-box-shadow: none,
 ), $link-action);
 
 
@@ -89,6 +89,9 @@ $elevation: (
 );
 
 $page-header-bg: transparent;
+
+$component-active-color: $body-color;
+$component-active-bg: lighten(desaturate(adjust-hue($primary, -1), 1.31), 43.14); // #fde8ea
 
 
 // Typography
@@ -192,7 +195,7 @@ $btn-primary: map-merge((
 	hover-bg: $primary-d1,
 	hover-border-color: $primary-d1,
 	active-bg: $primary-d2,
-	active-border-color: $primary-d2
+	active-border-color: $primary-d2,
 ), $btn-primary);
 
 $btn-secondary: () !default;
@@ -200,7 +203,7 @@ $btn-secondary: map-merge((
 	hover-bg: $secondary-d1,
 	hover-border-color: $secondary-d1,
 	active-border-color: $secondary-d2,
-	active-bg: $secondary-d2
+	active-bg: $secondary-d2,
 ), $btn-secondary);
 
 $btn-outline-primary: () !default;
@@ -259,6 +262,14 @@ $input-label-reference-mark-font-size: .375rem;
 
 $form-group-margin-bottom: 1.5rem;
 
+$input-group-sm-inset-item-btn: () !default;
+$input-group-sm-inset-item-btn: map-merge(
+	(
+		line-height: 1.9,
+	),
+	$input-group-sm-inset-item-btn
+);
+
 
 // Form validation
 
@@ -278,9 +289,20 @@ $input-danger-label-color: $danger;
 
 // Dropdowns
 
-$dropdown-color: $gray-800;
+$dropdown-color: $secondary;
 $dropdown-link-color: $dropdown-color;
 $dropdown-link-hover-color: $link-hover-color;
+
+$dropdown-item-padding-x: 1rem;
+$dropdown-item-padding-y: .5rem;
+
+$dropdown-item-base: () !default;
+$dropdown-item-base: map-merge(
+	(
+		focus-outline: 0,
+	),
+	$dropdown-item-base
+);
 
 
 // Pagination
@@ -293,6 +315,7 @@ $pagination-link-first-border-radius: $pagination-link-border-radius;
 $pagination-link-last-border-radius: $pagination-link-border-radius;
 
 $pagination-color: rgba($link-color, .7);
+$pagination-results-color: $pagination-color;
 $pagination-border-width: 0;
 
 $pagination-hover-bg: $gray-200;
@@ -306,7 +329,7 @@ $pagination-item: () !default;
 $pagination-item: map-merge(
 	(
 		margin-left: .063rem,
-		margin-right: .063rem
+		margin-right: .063rem,
 	),
 	$pagination-item
 );
@@ -324,7 +347,7 @@ $card-title: () !default;
 $card-title: map-merge((
 	font-size: $h2-font-size,
 	font-weight: $font-weight-bolder,
-	margin-bottom: 0
+	margin-bottom: 0,
 ), $card-title);
 
 $card-subtitle: () !default;
@@ -333,7 +356,7 @@ $card-subtitle: map-merge((
 	font-size: 0.75rem,
 	font-weight: $font-weight-bold,
 	text-transform: uppercase,
-	margin-bottom: .25rem
+	margin-bottom: .25rem,
 ), $card-subtitle);
 
 
@@ -342,18 +365,18 @@ $card-subtitle: map-merge((
 $sticker-xxl: () !default;
 $sticker-xxl: map-merge((
 	font-size: 1.75rem,
-	size: 3.75rem
+	size: 3.75rem,
 ), $sticker-xxl);
 
 $sticker-xxxl: () !default;
 $sticker-xxxl: map-merge((
 	font-size: 2.5rem,
-	size: 5rem
+	size: 5rem,
 ), $sticker-xxxl);
 
 $sticker-user-icon: () !default;
 $sticker-user-icon: map-merge((
-	box-shadow: map-get($elevation, 6)
+	box-shadow: map-get($elevation, 6),
 ), $sticker-user-icon);
 
 $sticker-blue-bg: $blue;
@@ -377,23 +400,23 @@ $sticker-palette: map-merge((
 	blue: (
 		bg: $sticker-blue-bg,
 		border-color: $sticker-blue-border-color,
-		color: $sticker-blue-color
+		color: $sticker-blue-color,
 	),
 	green: (
 		bg: $sticker-green-bg,
 		border-color: $sticker-green-border-color,
-		color: $sticker-green-color
+		color: $sticker-green-color,
 	),
 	orange: (
 		bg: $sticker-orange-bg,
 		border-color: $sticker-orange-border-color,
-		color: $sticker-orange-color
+		color: $sticker-orange-color,
 	),
 	gray-dark: (
 		bg: $sticker-gray-dark-bg,
 		border-color: $sticker-gray-dark-border-color,
-		color: $sticker-gray-dark-color
-	)
+		color: $sticker-gray-dark-color,
+	),
 ),$sticker-palette);
 
 
@@ -406,6 +429,7 @@ $badge-border-radius: 10rem;
 
 // Labels
 
+$label-font-weight: 400;
 $label-text-transform: uppercase;
 
 $label-lg: () !default;
@@ -413,7 +437,7 @@ $label-lg: map-merge((
 	font-size: .75rem,
 	padding-x: 0.65rem,
 	padding-y: 0.325rem,
-	text-transform: null
+	text-transform: null,
 ), $label-lg);
 
 
@@ -489,7 +513,7 @@ $breadcrumb-text-transform: none !important;
 $breadcrumb-link: () !default;
 $breadcrumb-link: map-merge(
 	(
-		focus-box-shadow: none
+		focus-box-shadow: none,
 	),
 	$breadcrumb-link
 );

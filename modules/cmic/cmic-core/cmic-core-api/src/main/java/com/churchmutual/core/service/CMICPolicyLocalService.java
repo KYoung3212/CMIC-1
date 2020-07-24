@@ -14,11 +14,16 @@
 
 package com.churchmutual.core.service;
 
+import com.churchmutual.core.model.CMICPolicyDisplay;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -51,5 +56,9 @@ public interface CMICPolicyLocalService extends BaseLocalService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CMICPolicyDisplay> getPolicyDisplays(long cmicAccountEntryId)
+		throws PortalException;
 
 }
